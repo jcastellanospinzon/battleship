@@ -1,48 +1,38 @@
 package edu.udistrital.battleship.client;
 
+import edu.udistrital.battleship.client.mvc.View;
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Launcher for the game.
- *
  * @author Julián Yezid Castellanos Pinzón <i>&lt;jcastellanospinzon@gmail.com&gt;</i>
  */
-public class View {
+public class BattleshipFrame {
 
-    private static final Logger LOGGER = LogManager.getLogger(View.class);
+    private static final Logger LOGGER = LogManager.getLogger(BattleshipFrame.class);
+
+    public static final String VIEW_ID_START = "start";
+    public static final String VIEW_ID_NEW_GAME = "new_game";
+    public static final String VIEW_ID_JOIN_GAME = "join_game";
 
     private JFrame frmMain;
     private Container container;
 
-    private JPanel pnlStart;
-    private JButton btnNewGame;
-    private JButton btnJoinGame;
+    private Map<String, View> views;
 
-    private JDialog dlgNewGame;
-
-    private JDialog dlgJoinGame;
-
-    public View() {
-
+    public BattleshipFrame() {
+        views = new HashMap<>();
     }
 
     public void init() {
         initMainFrame();
-        initStartPanel();
-
-        loadStartPanel();
     }
 
     private void initMainFrame() {
@@ -60,17 +50,19 @@ public class View {
         container.setLayout(new BorderLayout());
     }
 
-    private void initStartPanel() {
-        btnNewGame = new JButton("Start a New Game");
-        btnJoinGame = new JButton("Join an Existing Game");
-        pnlStart = new JPanel(new GridBagLayout());
-        pnlStart.add(btnNewGame, new GridBagConstraints(0, 0, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 20, 20, 20), 0, 0));
-        pnlStart.add(btnJoinGame, new GridBagConstraints(0, 1, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 20, 20, 20), 0, 0));
+    public void subscribeView(String viewId, View view) {
+        views.put(viewId, view);
+        view.setBattleshipFrame(this);
+        view.initRootComponent();
     }
 
-    private void loadStartPanel() {
-        container.add(pnlStart, BorderLayout.CENTER);
+    public void loadPanel(String viewId) {
+        container.removeAll();
+        container.add(views.get(viewId).getRootPanel(), BorderLayout.CENTER);
         frmMain.revalidate();
     }
 
+    public JFrame getFrmMain() {
+        return frmMain;
+    }
 }
