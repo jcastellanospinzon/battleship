@@ -1,5 +1,6 @@
 package edu.udistrital.battleship;
 
+import edu.udistrital.battleship.client.View;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,6 +24,8 @@ public class Launcher {
         LOGGER.info("***************************");
         LOGGER.info("Starting...");
 
+        View view = new View();
+        view.init();
 
         LOGGER.info("Started!");
     }
