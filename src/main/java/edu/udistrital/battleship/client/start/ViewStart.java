@@ -13,23 +13,22 @@ import javax.swing.JPanel;
  */
 public class ViewStart extends View<ControllerStart> {
 
+    private JButton btnNewGame;
+
+    private JButton btnJoinGame;
+
+    public ViewStart() {
+    }
+
     @Override
     public void initRootComponent() {
-        JButton btnNewGame = new JButton("Start a New Game");
-        btnNewGame.addActionListener(e -> newGameEvent());
-        JButton btnJoinGame = new JButton("Join an Existing Game");
-        btnJoinGame.addActionListener(e -> joinGameEvent());
+        btnNewGame = new JButton("Start a New Game");
+        btnNewGame.addActionListener(controller);
+        btnJoinGame = new JButton("Join an Existing Game");
+        btnJoinGame.addActionListener(controller);
         rootPanel = new JPanel(new GridBagLayout());
         rootPanel.add(btnNewGame, new GridBagConstraints(0, 0, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 20, 20, 20), 0, 0));
         rootPanel.add(btnJoinGame, new GridBagConstraints(0, 1, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 20, 20, 20), 0, 0));
-    }
-
-    private void newGameEvent() {
-        controller.newGame();
-    }
-
-    private void joinGameEvent() {
-        controller.joinGame();
     }
 
     public void renderViewNewGame() {
@@ -38,6 +37,14 @@ public class ViewStart extends View<ControllerStart> {
 
     public void renderViewJoinGame() {
         battleshipFrame.loadPanel(BattleshipFrame.VIEW_ID_JOIN_GAME);
+    }
+
+    public JButton getBtnNewGame() {
+        return btnNewGame;
+    }
+
+    public JButton getBtnJoinGame() {
+        return btnJoinGame;
     }
 
 }
