@@ -7,9 +7,6 @@ import java.awt.event.ActionListener;
 import static java.util.Objects.nonNull;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 
-/**
- * Created by julian on 11/10/16.
- */
 public class ControllerJoinGame extends Controller<ModelJoinGame, ViewJoinGame> implements ActionListener {
 
     @Override

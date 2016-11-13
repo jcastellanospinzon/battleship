@@ -36,18 +36,14 @@ public class ViewJoinGame extends View<ControllerJoinGame> {
         numberFormatter.setMinimum(1025);
         numberFormatter.setMaximum(32768);
         txtPort = new JFormattedTextField(numberFormatter);
-         btnJoin = new JButton("Join!");
-        btnJoin.addActionListener(e -> joinGameEvent());
+        btnJoin = new JButton("Join!");
+        btnJoin.addActionListener(controller);
         rootPanel = new JPanel(new GridBagLayout());
         rootPanel.add(lblHostname, new GridBagConstraints(0, 0, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 20, 5, 20), 0, 0));
         rootPanel.add(txtHostname, new GridBagConstraints(0, 1, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(5, 20, 10, 20), 0, 0));
         rootPanel.add(lblPort, new GridBagConstraints(0, 2, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(10, 20, 5, 20), 0, 0));
         rootPanel.add(txtPort, new GridBagConstraints(0, 3, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(5, 20, 20, 20), 0, 0));
         rootPanel.add(btnJoin, new GridBagConstraints(0, 4, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 20, 20, 20), 0, 0));
-    }
-
-    private void joinGameEvent() {
-
     }
 
     public void renderViewLoadPlayer() {

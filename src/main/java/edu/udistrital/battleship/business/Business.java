@@ -18,8 +18,9 @@ public class Business {
 
     }
 
-    public void startServer() {
-
+    public void startServer(int port) {
+        server = new Server();
+        server.startServer(port);
     }
 
     public void stopServer() {
@@ -30,8 +31,9 @@ public class Business {
         return nonNull(server) && server.isRunning();
     }
 
-    public void startClient() {
-
+    public void startClient(String hostname, int port) {
+        client = new Client();
+        client.startClient(hostname, port);
     }
 
     public void stopClient() {
