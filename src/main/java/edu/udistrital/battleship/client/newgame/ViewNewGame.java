@@ -13,9 +13,6 @@ import javax.swing.text.NumberFormatter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-/**
- * Created by julian on 11/10/16.
- */
 public class ViewNewGame extends View<ControllerNewGame> {
 
     public static final Logger LOGGER = LogManager.getLogger(ViewNewGame.class);
@@ -25,7 +22,7 @@ public class ViewNewGame extends View<ControllerNewGame> {
     private JFormattedTextField txtPort;
 
     @Override
-    public void initRootComponent() {
+    public void initRootPanel() {
         JLabel lblPort = new JLabel("Port to run server [1025 - 32768]: ");
         NumberFormat numberFormat = NumberFormat.getIntegerInstance();
         NumberFormatter numberFormatter = new NumberFormatter(numberFormat);

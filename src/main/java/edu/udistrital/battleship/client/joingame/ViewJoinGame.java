@@ -15,9 +15,6 @@ import javax.swing.text.NumberFormatter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-/**
- * Created by julian on 11/10/16.
- */
 public class ViewJoinGame extends View<ControllerJoinGame> {
 
     public static final Logger LOGGER = LogManager.getLogger(ViewNewGame.class);
@@ -29,7 +26,7 @@ public class ViewJoinGame extends View<ControllerJoinGame> {
     private JFormattedTextField txtPort;
 
     @Override
-    public void initRootComponent() {
+    public void initRootPanel() {
         JLabel lblHostname = new JLabel("IP Address or Hostname of the server:");
         txtHostname = new JTextField();
         JLabel lblPort = new JLabel("Port of the server [1025 - 32768]: ");

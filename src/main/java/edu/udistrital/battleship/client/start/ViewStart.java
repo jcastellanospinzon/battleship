@@ -8,9 +8,6 @@ import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-/**
- * Created by julian on 11/10/16.
- */
 public class ViewStart extends View<ControllerStart> {
 
     private JButton btnNewGame;
@@ -21,7 +18,7 @@ public class ViewStart extends View<ControllerStart> {
     }
 
     @Override
-    public void initRootComponent() {
+    public void initRootPanel() {
         btnNewGame = new JButton("Start a New Game");
         btnNewGame.addActionListener(controller);
         btnJoinGame = new JButton("Join an Existing Game");

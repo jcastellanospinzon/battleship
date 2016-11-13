@@ -26,6 +26,8 @@ public abstract class View<C extends Controller> {
         this.controller = controller;
     }
 
+    public abstract void initRootPanel();
+
     public JPanel getRootPanel() {
         return rootPanel;
     }
@@ -33,7 +35,5 @@ public abstract class View<C extends Controller> {
     public void renderMessage(String message, String title, int messageType) {
         JOptionPane.showMessageDialog(battleshipFrame.getFrmMain(), message, title, messageType);
     }
-
-    public abstract void initRootComponent();
 
 }

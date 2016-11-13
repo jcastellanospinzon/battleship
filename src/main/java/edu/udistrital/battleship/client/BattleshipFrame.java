@@ -19,10 +19,13 @@ public class BattleshipFrame {
     private static final Logger LOGGER = LogManager.getLogger(BattleshipFrame.class);
 
     public static final String VIEW_ID_START = "start";
+
     public static final String VIEW_ID_NEW_GAME = "new_game";
+
     public static final String VIEW_ID_JOIN_GAME = "join_game";
 
     private JFrame frmMain;
+
     private Container container;
 
     private Map<String, View> views;
@@ -52,8 +55,6 @@ public class BattleshipFrame {
 
     public void subscribeView(String viewId, View view) {
         views.put(viewId, view);
-        view.setBattleshipFrame(this);
-        view.initRootComponent();
     }
 
     public void loadPanel(String viewId) {
