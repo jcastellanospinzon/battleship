@@ -1,5 +1,6 @@
 package edu.udistrital.battleship.client.joingame;
 
+import edu.udistrital.battleship.client.BattleshipFrame;
 import edu.udistrital.battleship.client.mvc.View;
 import edu.udistrital.battleship.client.newgame.ViewNewGame;
 import java.awt.GridBagConstraints;
@@ -47,7 +48,7 @@ public class ViewJoinGame extends View<ControllerJoinGame> {
     }
 
     public void renderViewLoadPlayer() {
-
+        battleshipFrame.loadPanel(BattleshipFrame.VIEW_ID_LOAD_PLAYER);
     }
 
     public JButton getBtnJoin() {

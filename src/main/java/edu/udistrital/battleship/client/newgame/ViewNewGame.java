@@ -1,5 +1,6 @@
 package edu.udistrital.battleship.client.newgame;
 
+import edu.udistrital.battleship.client.BattleshipFrame;
 import edu.udistrital.battleship.client.mvc.View;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -39,7 +40,7 @@ public class ViewNewGame extends View<ControllerNewGame> {
     }
 
     public void renderViewLoadPlayer() {
-
+        battleshipFrame.loadPanel(BattleshipFrame.VIEW_ID_LOAD_PLAYER);
     }
 
     public JButton getBtnNew() {

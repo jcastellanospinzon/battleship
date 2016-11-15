@@ -16,7 +16,7 @@ public class ControllerNewGame extends Controller<ModelNewGame, ViewNewGame> imp
         }
     }
 
-    public void newGame() {
+    private void newGame() {
         Object portValue = view.getTxtPort().getValue();
         if (nonNull(portValue)) {
             int port = (Integer) portValue;

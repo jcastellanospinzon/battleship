@@ -24,6 +24,8 @@ public class BattleshipFrame {
 
     public static final String VIEW_ID_JOIN_GAME = "join_game";
 
+    public static final String VIEW_ID_LOAD_PLAYER = "load_player";
+
     private JFrame frmMain;
 
     private Container container;
@@ -58,6 +60,7 @@ public class BattleshipFrame {
     }
 
     public void loadPanel(String viewId) {
+        LOGGER.debug("Loading panel {}", viewId);
         container.removeAll();
         container.add(views.get(viewId).getRootPanel(), BorderLayout.CENTER);
         frmMain.revalidate();
@@ -66,4 +69,5 @@ public class BattleshipFrame {
     public JFrame getFrmMain() {
         return frmMain;
     }
+
 }

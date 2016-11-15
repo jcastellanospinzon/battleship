@@ -51,7 +51,8 @@ public class Server implements Runnable {
         LOGGER.info("Waiting for player \"{}\" connection", playerName);
         try (Socket clientSocket = serverSocket.accept()) {
             LOGGER.info("Player {} has been connected succesfully", playerName);
-
+            ServerClient serverClient = new ServerClient();
+            serverClient.startServerClient(clientSocket);
 
         } catch (IOException e) {
 
