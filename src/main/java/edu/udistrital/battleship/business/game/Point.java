@@ -19,7 +19,12 @@ public class Point {
         return column;
     }
 
-    enum Row {
+    @Override
+    public String toString() {
+        return Point.class.getCanonicalName() + "[row=" + row + ", column=" + column + "]";
+    }
+
+    public enum Row {
 
         ROW_1("1", 0),
         ROW_2("2", 1),
@@ -51,18 +56,18 @@ public class Point {
 
     }
 
-    enum Column {
+    public enum Column {
 
-        COLUMN_A("A", 0),
-        COLUMN_B("B", 1),
-        COLUMN_C("C", 2),
-        COLUMN_D("D", 3),
-        COLUMN_E("E", 4),
-        COLUMN_F("F", 5),
-        COLUMN_G("G", 6),
-        COLUMN_H("H", 7),
-        COLUMN_I("I", 8),
-        COLUMN_J("K", 9);
+        COLUMN_1("1", 0),
+        COLUMN_2("2", 1),
+        COLUMN_3("3", 2),
+        COLUMN_4("4", 3),
+        COLUMN_5("5", 4),
+        COLUMN_6("6", 5),
+        COLUMN_7("7", 6),
+        COLUMN_8("8", 7),
+        COLUMN_9("9", 8),
+        COLUMN_10("10", 9);
 
         private final String code;
 
