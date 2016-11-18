@@ -1,5 +1,7 @@
 package edu.udistrital.battleship.business.game;
 
+import edu.udistrital.battleship.business.game.Point.Column;
+import edu.udistrital.battleship.business.game.Point.Row;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,13 +40,15 @@ public class Ship {
         int sizeCounter = 1;
         do {
             points.add(point);
-            if(orientation == Orientation.VERTICAL) {
-                // Calcular currentPoint incrementando la fila
+            if (orientation == Orientation.VERTICAL) {
+                int newRowArrayPosition = currentPoint.getRow().getArrayPosition() + 1;
+                currentPoint = new Point(Row.fromArrayPosition(newRowArrayPosition).get(), currentPoint.getColumn());
             } else {
-                // Calcular currentPoint incrementando la columna
+                int newColumnArrayPosition = currentPoint.getColumn().getArrayPosition() + 1;
+                currentPoint = new Point(currentPoint.getRow(), Column.fromArrayPosition(newColumnArrayPosition).get());
             }
             sizeCounter++;
-        } while (sizeCounter < type.getLength());
+        } while (sizeCounter <= type.getLength());
         return points;
     }
 
@@ -62,27 +66,21 @@ public class Ship {
 
     public enum Type {
 
-        CARRIER(4, 1, "boat-icon-40.png", "boat-icon-40.png"),
+        CARRIER(4, 1),
 
-        BATTLESHIP(3, 2, "boat-icon-40.png", "boat-icon-40.png"),
+        BATTLESHIP(3, 2),
 
-        CRUISER(2, 3, "boat-icon-40.png", "boat-icon-40.png"),
+        CRUISER(2, 3),
 
-        SUBMARINE(1, 4, "boat-icon-40.png", "boat-icon-40.png");
+        SUBMARINE(1, 4);
 
         private final int length;
 
         private final int itemsPerBoard;
 
-        private final String verticalIconPath;
-
-        private final String horizontalIconPath;
-
-        Type(int length, int itemsPerBoard, String verticalIconPath, String horizontalIconPath) {
+        Type(int length, int itemsPerBoard) {
             this.length = length;
             this.itemsPerBoard = itemsPerBoard;
-            this.verticalIconPath = verticalIconPath;
-            this.horizontalIconPath = horizontalIconPath;
         }
 
         public int getLength() {
@@ -91,14 +89,6 @@ public class Ship {
 
         public int getItemsPerBoard() {
             return itemsPerBoard;
-        }
-
-        public String getVerticalIconPath() {
-            return verticalIconPath;
-        }
-
-        public String getHorizontalIconPath() {
-            return horizontalIconPath;
         }
 
     }

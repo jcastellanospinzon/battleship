@@ -1,5 +1,6 @@
 package edu.udistrital.battleship.client.loadplayer;
 
+import edu.udistrital.battleship.business.game.Board;
 import edu.udistrital.battleship.business.game.Ship;
 import edu.udistrital.battleship.business.game.Ship.Type;
 import edu.udistrital.battleship.client.mvc.View;
@@ -41,7 +42,7 @@ public class ViewLoadPlayer extends View<ControllerLoadPlayer> {
 
     private Map<String, Ship.Type> shipTypes;
 
-    private List<Ship> ships;
+    private Board board;
 
     public ViewLoadPlayer() {
         availableShips = new ArrayList<>();
@@ -67,8 +68,6 @@ public class ViewLoadPlayer extends View<ControllerLoadPlayer> {
         shipTypes.put("Submarine 2", Ship.Type.SUBMARINE);
         shipTypes.put("Submarine 3", Ship.Type.SUBMARINE);
         shipTypes.put("Submarine 4", Ship.Type.SUBMARINE);
-
-        ships = new ArrayList<>();
     }
 
     @Override
@@ -125,19 +124,15 @@ public class ViewLoadPlayer extends View<ControllerLoadPlayer> {
         return shipTypes;
     }
 
-    public List<Ship> getShips() {
-        return ships;
-    }
-
-    public void addShip(Ship ship) {
-        ships.add(ship);
+    public void drawBoard(Board board) {
+        this.board = board;
         cmbShips.removeItemAt(cmbShips.getSelectedIndex());
         btnVerticalShip.setSelected(true);
         validatePlay();
     }
 
     private void validatePlay() {
-        if(ships.size() == 10) {
+        if (board.getShips().size() == 10) {
             btnPlay.setEnabled(true);
             cmbShips.setEnabled(false);
             btnVerticalShip.setEnabled(false);

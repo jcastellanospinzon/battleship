@@ -25,7 +25,7 @@ public class ModelLoadPlayer extends Model<ViewLoadPlayer> {
         LOGGER.debug("Allocating ship of type {} and orientation {} in point {}", type, orientation, point);
         Ship ship = new Ship(type, orientation, point);
         board.addShip(ship);
-        view.addShip(ship);
+        view.drawBoard(board);
     }
 
 }
