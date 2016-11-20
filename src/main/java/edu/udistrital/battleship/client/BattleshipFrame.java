@@ -26,6 +26,8 @@ public class BattleshipFrame {
 
     public static final String VIEW_ID_LOAD_PLAYER = "load_player";
 
+    public static final String VIEW_ID_PLAY_GAME = "play_game";
+
     private JFrame frmMain;
 
     private Container container;

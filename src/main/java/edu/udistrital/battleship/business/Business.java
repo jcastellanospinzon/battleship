@@ -1,6 +1,7 @@
 package edu.udistrital.battleship.business;
 
 import edu.udistrital.battleship.business.client.Client;
+import edu.udistrital.battleship.business.game.Board;
 import edu.udistrital.battleship.business.server.Server;
 
 import static java.util.Objects.nonNull;
@@ -10,6 +11,8 @@ public class Business {
     private Server server;
 
     private Client client;
+
+    private Board playerBoard;
 
     public Business() {
     }
@@ -42,6 +45,10 @@ public class Business {
 
     public boolean isClientRunning() {
         return nonNull(client) && client.isRunning();
+    }
+
+    public void playGame(Board playerBoard) {
+        this.playerBoard = playerBoard;
     }
 
 }

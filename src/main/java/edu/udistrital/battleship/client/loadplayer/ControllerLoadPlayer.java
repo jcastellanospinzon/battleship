@@ -9,12 +9,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.Optional;
 
 import static edu.udistrital.battleship.client.swing.JCanvasBattleshipBoard.initPoint;
-import static java.util.Objects.nonNull;
 
 public class ControllerLoadPlayer extends Controller<ModelLoadPlayer, ViewLoadPlayer>
-        implements ActionListener, MouseListener, MouseMotionListener {
+    implements ActionListener, MouseListener, MouseMotionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -62,25 +62,31 @@ public class ControllerLoadPlayer extends Controller<ModelLoadPlayer, ViewLoadPl
     }
 
     private void play() {
-
+        model.playGame();
     }
 
     private void click(int x, int y) {
-        Point point = initPoint(x, y);
-        String selectedShip = (String) view.getCmbShips().getSelectedItem();
-        Ship.Type shipType = view.getShipTypes().get(selectedShip);
-        Ship.Orientation shipOrientation = view.getBtnVerticalShip().isSelected() ? Orientation.VERTICAL : Orientation.HORIZONTAL;
-        if (nonNull(point) && boardIsEmpty(point, shipType, shipOrientation) && shipFits(point, shipType, shipOrientation)) {
-            model.addShip(shipType, shipOrientation, point);
+        if (isLoadingShips()) {
+            Optional<Point> optPoint = initPoint(x, y);
+            String selectedShip = (String) view.getCmbShips().getSelectedItem();
+            Ship.Type shipType = view.getShipTypes().get(selectedShip);
+            Ship.Orientation shipOrientation = view.getBtnVerticalShip().isSelected() ? Orientation.VERTICAL : Orientation.HORIZONTAL;
+            if (optPoint.isPresent() && shipFits(optPoint.get(), shipType, shipOrientation) && boardIsEmpty(optPoint.get(), shipType, shipOrientation)) {
+                model.addShip(shipType, shipOrientation, optPoint.get());
+            }
         }
+    }
+
+    private boolean isLoadingShips() {
+        return model.getBoard().getShips().size() < 10;
+    }
+
+    private boolean shipFits(Point point, Ship.Type shipType, Ship.Orientation shipOrientation) {
+        return model.getBoard().shipFits(point, shipType, shipOrientation);
     }
 
     private boolean boardIsEmpty(Point point, Ship.Type shipType, Ship.Orientation shipOrientation) {
         return model.getBoard().thereIsShip(point, shipType, shipOrientation);
-    }
-
-    private boolean shipFits(Point point, Ship.Type shipType, Ship.Orientation shipOrientation) {
-        return true;
     }
 
 }

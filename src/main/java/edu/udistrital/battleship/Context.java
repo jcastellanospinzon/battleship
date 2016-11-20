@@ -12,6 +12,9 @@ import edu.udistrital.battleship.client.mvc.MVC;
 import edu.udistrital.battleship.client.newgame.ControllerNewGame;
 import edu.udistrital.battleship.client.newgame.ModelNewGame;
 import edu.udistrital.battleship.client.newgame.ViewNewGame;
+import edu.udistrital.battleship.client.playgame.ControllerPlayGame;
+import edu.udistrital.battleship.client.playgame.ModelPlayGame;
+import edu.udistrital.battleship.client.playgame.ViewPlayGame;
 import edu.udistrital.battleship.client.start.ControllerStart;
 import edu.udistrital.battleship.client.start.ModelStart;
 import edu.udistrital.battleship.client.start.ViewStart;
@@ -63,6 +66,11 @@ public enum Context {
         ViewLoadPlayer viewLoadPlayer = new ViewLoadPlayer();
         ControllerLoadPlayer controllerLoadPlayer = new ControllerLoadPlayer();
         new MVC<>(modelLoadPlayer, viewLoadPlayer, controllerLoadPlayer, battleshipFrame, BattleshipFrame.VIEW_ID_LOAD_PLAYER, business);
+        LOGGER.debug("MVC triad play_game");
+        ModelPlayGame modelPlayGame = new ModelPlayGame();
+        ViewPlayGame viewPlayGame = new ViewPlayGame();
+        ControllerPlayGame controllerPlayGame = new ControllerPlayGame();
+        new MVC<>(modelPlayGame, viewPlayGame, controllerPlayGame, battleshipFrame, BattleshipFrame.VIEW_ID_PLAY_GAME, business);
 
         LOGGER.debug("Loading default triad into main frame");
         battleshipFrame.loadPanel(BattleshipFrame.VIEW_ID_START);

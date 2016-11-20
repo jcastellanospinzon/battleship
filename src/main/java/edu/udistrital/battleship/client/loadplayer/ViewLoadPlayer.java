@@ -3,6 +3,7 @@ package edu.udistrital.battleship.client.loadplayer;
 import edu.udistrital.battleship.business.game.Board;
 import edu.udistrital.battleship.business.game.Ship;
 import edu.udistrital.battleship.business.game.Ship.Type;
+import edu.udistrital.battleship.client.BattleshipFrame;
 import edu.udistrital.battleship.client.mvc.View;
 import edu.udistrital.battleship.client.swing.JCanvasBattleshipBoard;
 import java.awt.GridBagConstraints;
@@ -126,6 +127,7 @@ public class ViewLoadPlayer extends View<ControllerLoadPlayer> {
 
     public void drawBoard(Board board) {
         this.board = board;
+        canvasLoadPlayer.setBoard(board);
         cmbShips.removeItemAt(cmbShips.getSelectedIndex());
         btnVerticalShip.setSelected(true);
         validatePlay();
@@ -138,6 +140,10 @@ public class ViewLoadPlayer extends View<ControllerLoadPlayer> {
             btnVerticalShip.setEnabled(false);
             btnHorizontalShip.setEnabled(false);
         }
+    }
+
+    public void renderViewPlayGame() {
+        battleshipFrame.loadPanel(BattleshipFrame.VIEW_ID_PLAY_GAME);
     }
 
 }

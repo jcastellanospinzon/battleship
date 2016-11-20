@@ -3,6 +3,7 @@ package edu.udistrital.battleship.business.game;
 import edu.udistrital.battleship.business.game.Point.Column;
 import edu.udistrital.battleship.business.game.Point.Row;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Ship {
@@ -11,14 +12,18 @@ public class Ship {
 
     private final Orientation orientation;
 
-    private final Point point;
+    private final Point referencePoint;
+
+    private final List<Point> points;
 
     private int life;
 
-    public Ship(Type type, Orientation orientation, Point point) {
+    public Ship(Type type, Orientation orientation, Point referencePoint)
+        throws ShipDoesNotFitException {
         this.type = type;
         this.orientation = orientation;
-        this.point = point;
+        this.referencePoint = referencePoint;
+        this.points = Collections.unmodifiableList(calculatePoints(type, orientation, referencePoint));
         life = type.length;
     }
 
@@ -30,30 +35,47 @@ public class Ship {
         return orientation;
     }
 
-    public Point getPoint() {
-        return point;
+    public Point getReferencePoint() {
+        return referencePoint;
     }
 
     public List<Point> getPoints() {
-        List<Point> points = new ArrayList<>();
-        Point currentPoint = point;
-        int sizeCounter = 1;
-        do {
-            points.add(point);
-            if (orientation == Orientation.VERTICAL) {
-                int newRowArrayPosition = currentPoint.getRow().getArrayPosition() + 1;
-                currentPoint = new Point(Row.fromArrayPosition(newRowArrayPosition).get(), currentPoint.getColumn());
-            } else {
-                int newColumnArrayPosition = currentPoint.getColumn().getArrayPosition() + 1;
-                currentPoint = new Point(currentPoint.getRow(), Column.fromArrayPosition(newColumnArrayPosition).get());
-            }
-            sizeCounter++;
-        } while (sizeCounter <= type.getLength());
         return points;
     }
 
     public int getLife() {
         return life;
+    }
+
+    private static List<Point> calculatePoints(Type type, Orientation orientation, Point referencePoint)
+        throws ShipDoesNotFitException {
+        List<Point> points = new ArrayList<>();
+        Point currentPoint = referencePoint;
+        while (points.size() < type.getLength()) {
+            points.add(currentPoint);
+            if (points.size() < type.getLength()) {
+                currentPoint = (orientation == Orientation.VERTICAL) ? getPointBelow(currentPoint) : getPointAtRight(currentPoint);
+            }
+        }
+        return points;
+    }
+
+    private static Point getPointAtRight(Point point)
+        throws ShipDoesNotFitException {
+        int newColumnArrayPosition = point.getColumn().getArrayPosition() + 1;
+        Row currentPointRow = point.getRow();
+        Column currentPointColumn = Column.fromArrayPosition(newColumnArrayPosition)
+                                        .orElseThrow(() -> new ShipDoesNotFitException("Ship cannot be localized at column " + newColumnArrayPosition));
+        return new Point(currentPointRow, currentPointColumn);
+    }
+
+    private static Point getPointBelow(Point point)
+        throws ShipDoesNotFitException {
+        int newRowArrayPosition = point.getRow().getArrayPosition() + 1;
+        Column currentPointColumn = point.getColumn();
+        Row currentPointRow = Row.fromArrayPosition(newRowArrayPosition)
+                                  .orElseThrow(() -> new ShipDoesNotFitException("Ship cannot be localized at row " + newRowArrayPosition));
+        return new Point(currentPointRow, currentPointColumn);
     }
 
     public enum Orientation {
