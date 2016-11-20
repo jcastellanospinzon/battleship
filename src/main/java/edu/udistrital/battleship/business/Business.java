@@ -18,6 +18,8 @@ public class Business {
 
     private Board playerBoard;
 
+    private Board rivalBoard;
+
     public Business() {
         observers = new ArrayList<>();
     }
@@ -29,7 +31,7 @@ public class Business {
     public void registerObserver(BusinessObserver observer) {
         observers.add(observer);
     }
-    
+
     public void notifyObservers() {
         observers.forEach(observer -> observer.notifyChange());
     }
@@ -60,8 +62,16 @@ public class Business {
         return nonNull(client) && client.isRunning();
     }
 
-    public void playGame(Board playerBoard) {
+    public void playGame(Board playerBoard, Board rivalBoard) {
         this.playerBoard = playerBoard;
+        this.rivalBoard = rivalBoard;
     }
 
+    public Board getPlayerBoard() {
+        return playerBoard;
+    }
+
+    public Board getRivalBoard() {
+        return rivalBoard;
+    }
 }

@@ -18,6 +18,10 @@ public abstract class View<C extends Controller> {
     public View() {
     }
 
+    public void init() {
+        controller.init();
+    }
+
     public void setBattleshipFrame(BattleshipFrame battleshipFrame) {
         this.battleshipFrame = battleshipFrame;
     }

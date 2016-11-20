@@ -63,8 +63,10 @@ public class BattleshipFrame {
 
     public void loadPanel(String viewId) {
         LOGGER.debug("Loading panel {}", viewId);
+        View view = views.get(viewId);
+        view.init();
         container.removeAll();
-        container.add(views.get(viewId).getRootPanel(), BorderLayout.CENTER);
+        container.add(view.getRootPanel(), BorderLayout.CENTER);
         frmMain.revalidate();
     }
 

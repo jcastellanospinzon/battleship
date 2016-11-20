@@ -14,6 +14,13 @@ public class ModelPlayGame extends Model<ViewPlayGame>
     }
 
     @Override
+    public void init() {
+        super.init();
+        view.drawPlayerBoard(business.getPlayerBoard());
+        view.drawRivalBoard(business.getRivalBoard());
+    }
+
+    @Override
     public void notifyChange() {
 
     }

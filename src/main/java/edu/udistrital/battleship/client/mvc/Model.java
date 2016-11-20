@@ -14,6 +14,10 @@ public abstract class Model <V extends View> {
     public Model() {
     }
 
+    public void init() {
+
+    }
+
     public void setBusiness(Business business) {
         this.business = business;
     }

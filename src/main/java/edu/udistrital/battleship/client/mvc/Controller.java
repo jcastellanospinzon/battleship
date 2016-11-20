@@ -12,6 +12,10 @@ public abstract class Controller<M extends Model, V extends View> {
     public Controller() {
     }
 
+    public void init() {
+        model.init();
+    }
+
     public void setModel(M model) {
         this.model = model;
     }

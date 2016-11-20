@@ -36,7 +36,7 @@ public class ModelLoadPlayer extends Model<ViewLoadPlayer> {
     }
 
     public void playGame() {
-        business.playGame(board);
+        business.playGame(board, new Board());
         view.renderViewPlayGame();
         view.renderMessage("Destroy your enemy!", "Info", INFORMATION_MESSAGE);
     }
