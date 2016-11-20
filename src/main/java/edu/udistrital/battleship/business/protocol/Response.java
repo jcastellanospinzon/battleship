@@ -1,5 +1,9 @@
 package edu.udistrital.battleship.business.protocol;
 
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.Optional;
+
 public enum Response {
 
     OKAY("OK"),
@@ -10,6 +14,16 @@ public enum Response {
 
     Response(String response) {
         this.response = response;
+    }
+
+    public String getResponse() {
+        return response;
+    }
+
+    public static Optional<Response> byResponse(String response) {
+        return Arrays.stream(Response.values())
+                   .filter(r -> Objects.equals(r.response, response))
+                   .findFirst();
     }
 
 }

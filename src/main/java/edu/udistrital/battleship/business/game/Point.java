@@ -1,5 +1,7 @@
 package edu.udistrital.battleship.business.game;
 
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
 
 public class Point {
@@ -24,6 +26,20 @@ public class Point {
     @Override
     public String toString() {
         return Point.class.getCanonicalName() + "[row=" + row + ", column=" + column + "]";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Point point = (Point) o;
+        return row == point.row &&
+                   column == point.column;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(row, column);
     }
 
     public enum Row {
@@ -57,57 +73,15 @@ public class Point {
         }
         
         public static Optional<Row> fromCode(String code) {
-            switch (code) {
-                case "1":
-                    return Optional.of(ROW_1);
-                case "2":
-                    return Optional.of(ROW_2);
-                case "3":
-                    return Optional.of(ROW_3);
-                case "4":
-                    return Optional.of(ROW_4);
-                case "5":
-                    return Optional.of(ROW_5);
-                case "6":
-                    return Optional.of(ROW_6);
-                case "7":
-                    return Optional.of(ROW_7);
-                case "8":
-                    return Optional.of(ROW_8);
-                case "9":
-                    return Optional.of(ROW_9);
-                case "10":
-                    return Optional.of(ROW_10);
-                default:
-                    return Optional.empty();
-            }
+            return Arrays.stream(Row.values())
+                .filter(row -> Objects.equals(row.code, code))
+                .findFirst();
         }
         
         public static Optional<Row> fromArrayPosition(int arrayPosition) {
-            switch (arrayPosition) {
-                case 0:
-                    return Optional.of(ROW_1);
-                case 1:
-                    return Optional.of(ROW_2);
-                case 2:
-                    return Optional.of(ROW_3);
-                case 3:
-                    return Optional.of(ROW_4);
-                case 4:
-                    return Optional.of(ROW_5);
-                case 5:
-                    return Optional.of(ROW_6);
-                case 6:
-                    return Optional.of(ROW_7);
-                case 7:
-                    return Optional.of(ROW_8);
-                case 8:
-                    return Optional.of(ROW_9);
-                case 9:
-                    return Optional.of(ROW_10);
-                default:
-                    return Optional.empty();
-            }
+            return Arrays.stream(Row.values())
+                       .filter(row -> row.arrayPosition == arrayPosition)
+                       .findFirst();
         }
 
     }
@@ -143,57 +117,15 @@ public class Point {
         }
 
         public static Optional<Column> fromCode(String code) {
-            switch (code) {
-                case "1":
-                    return Optional.of(COLUMN_1);
-                case "2":
-                    return Optional.of(COLUMN_2);
-                case "3":
-                    return Optional.of(COLUMN_3);
-                case "4":
-                    return Optional.of(COLUMN_4);
-                case "5":
-                    return Optional.of(COLUMN_5);
-                case "6":
-                    return Optional.of(COLUMN_6);
-                case "7":
-                    return Optional.of(COLUMN_7);
-                case "8":
-                    return Optional.of(COLUMN_8);
-                case "9":
-                    return Optional.of(COLUMN_9);
-                case "10":
-                    return Optional.of(COLUMN_10);
-                default:
-                    return Optional.empty();
-            }
+            return Arrays.stream(Column.values())
+                       .filter(column -> Objects.equals(column.code, code))
+                       .findFirst();
         }
 
         public static Optional<Column> fromArrayPosition(int arrayPosition) {
-            switch (arrayPosition) {
-                case 0:
-                    return Optional.of(COLUMN_1);
-                case 1:
-                    return Optional.of(COLUMN_2);
-                case 2:
-                    return Optional.of(COLUMN_3);
-                case 3:
-                    return Optional.of(COLUMN_4);
-                case 4:
-                    return Optional.of(COLUMN_5);
-                case 5:
-                    return Optional.of(COLUMN_6);
-                case 6:
-                    return Optional.of(COLUMN_7);
-                case 7:
-                    return Optional.of(COLUMN_8);
-                case 8:
-                    return Optional.of(COLUMN_9);
-                case 9:
-                    return Optional.of(COLUMN_10);
-                default:
-                    return Optional.empty();
-            }
+            return Arrays.stream(Column.values())
+                       .filter(column -> column.getArrayPosition() == arrayPosition)
+                       .findFirst();
         }
         
     }
