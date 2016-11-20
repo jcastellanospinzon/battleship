@@ -20,7 +20,11 @@ public class ViewJoinGame extends View<ControllerJoinGame> {
 
     public static final Logger LOGGER = LogManager.getLogger(ViewNewGame.class);
 
+    public static final String DEFAULT_GUEST_PLAYER_NAME = "Guest";
+
     private JButton btnJoin;
+
+    private JTextField txtPlayerName;
 
     private JTextField txtHostname;
 
@@ -28,6 +32,8 @@ public class ViewJoinGame extends View<ControllerJoinGame> {
 
     @Override
     public void initRootPanel() {
+        JLabel lblPlayerName = new JLabel("Your name:");
+        txtPlayerName = new JTextField(DEFAULT_GUEST_PLAYER_NAME);
         JLabel lblHostname = new JLabel("IP Address or Hostname of the server:");
         txtHostname = new JTextField();
         JLabel lblPort = new JLabel("Port of the server [1025 - 32768]: ");
@@ -40,11 +46,13 @@ public class ViewJoinGame extends View<ControllerJoinGame> {
         btnJoin = new JButton("Join!");
         btnJoin.addActionListener(controller);
         rootPanel = new JPanel(new GridBagLayout());
-        rootPanel.add(lblHostname, new GridBagConstraints(0, 0, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 20, 5, 20), 0, 0));
-        rootPanel.add(txtHostname, new GridBagConstraints(0, 1, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(5, 20, 10, 20), 0, 0));
-        rootPanel.add(lblPort, new GridBagConstraints(0, 2, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(10, 20, 5, 20), 0, 0));
-        rootPanel.add(txtPort, new GridBagConstraints(0, 3, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(5, 20, 20, 20), 0, 0));
-        rootPanel.add(btnJoin, new GridBagConstraints(0, 4, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 20, 20, 20), 0, 0));
+        rootPanel.add(lblPlayerName, new GridBagConstraints(0, 0, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 20, 5, 20), 0, 0));
+        rootPanel.add(txtPlayerName, new GridBagConstraints(0, 1, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(5, 20, 10, 20), 0, 0));
+        rootPanel.add(lblHostname, new GridBagConstraints(0, 2, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(10, 20, 5, 20), 0, 0));
+        rootPanel.add(txtHostname, new GridBagConstraints(0, 3, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(5, 20, 10, 20), 0, 0));
+        rootPanel.add(lblPort, new GridBagConstraints(0, 4, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(10, 20, 5, 20), 0, 0));
+        rootPanel.add(txtPort, new GridBagConstraints(0, 5, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(5, 20, 20, 20), 0, 0));
+        rootPanel.add(btnJoin, new GridBagConstraints(0, 6, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 20, 20, 20), 0, 0));
     }
 
     public void renderViewLoadPlayer() {
@@ -53,6 +61,10 @@ public class ViewJoinGame extends View<ControllerJoinGame> {
 
     public JButton getBtnJoin() {
         return btnJoin;
+    }
+
+    public JTextField getTxtPlayerName() {
+        return txtPlayerName;
     }
 
     public JTextField getTxtHostname() {

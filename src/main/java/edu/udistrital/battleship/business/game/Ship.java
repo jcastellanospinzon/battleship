@@ -88,29 +88,22 @@ public class Ship {
 
     public enum Type {
 
-        CARRIER(4, 1),
+        CARRIER(4),
 
-        BATTLESHIP(3, 2),
+        BATTLESHIP(3),
 
-        CRUISER(2, 3),
+        CRUISER(2),
 
-        SUBMARINE(1, 4);
+        SUBMARINE(1);
 
         private final int length;
 
-        private final int itemsPerBoard;
-
-        Type(int length, int itemsPerBoard) {
+        Type(int length) {
             this.length = length;
-            this.itemsPerBoard = itemsPerBoard;
         }
 
         public int getLength() {
             return length;
-        }
-
-        public int getItemsPerBoard() {
-            return itemsPerBoard;
         }
 
     }

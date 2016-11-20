@@ -2,6 +2,8 @@ package edu.udistrital.battleship.business;
 
 import edu.udistrital.battleship.business.client.Client;
 import edu.udistrital.battleship.business.game.Board;
+import edu.udistrital.battleship.business.protocol.Command;
+import edu.udistrital.battleship.business.protocol.Protocol;
 import edu.udistrital.battleship.business.server.Server;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,9 +51,9 @@ public class Business {
         return nonNull(server) && server.isRunning();
     }
 
-    public void startClient(String hostname, int port) {
+    public void startClient(String playerName, String hostname, int port) {
         client = new Client();
-        client.startClient(hostname, port);
+        client.startClient(playerName, hostname, port);
     }
 
     public void stopClient() {
@@ -65,6 +67,7 @@ public class Business {
     public void playGame(Board playerBoard, Board rivalBoard) {
         this.playerBoard = playerBoard;
         this.rivalBoard = rivalBoard;
+        client.sendMessage(Protocol.buildMessage().withCommand(Command.READY));
     }
 
     public Board getPlayerBoard() {

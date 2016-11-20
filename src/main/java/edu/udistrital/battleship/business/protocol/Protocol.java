@@ -15,10 +15,13 @@ public final class Protocol {
     private Protocol() {
     }
 
-    public static Message getMessageFromBytes(byte[] bytes, Command commandSend)
+    public static Message buildMessage() {
+        return Message.buildMessage();
+    }
+
+    public static Message getMessageFromString(String strMessage, Command commandSend)
         throws InvalidMessageException {
         Message message = Message.buildMessage();
-        String strMessage = new String(bytes);
         String strMessageCommand = validateHeader(strMessage);
         String strMessageParameters = validateCommandResponse(strMessage, strMessageCommand, message);
         if (isNull(commandSend)) {

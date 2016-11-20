@@ -17,10 +17,11 @@ public class ControllerNewGame extends Controller<ModelNewGame, ViewNewGame> imp
     }
 
     private void newGame() {
+        String playerName = view.getTxtPlayerName().getText();
         Object portValue = view.getTxtPort().getValue();
         if (nonNull(portValue)) {
             int port = (Integer) portValue;
-            model.newGame(port);
+            model.newGame(playerName, port);
         } else {
             view.renderMessage("Invalid port value, it must be an integer between 1025 and 32768", "Error", ERROR_MESSAGE);
         }

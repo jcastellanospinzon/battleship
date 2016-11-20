@@ -10,9 +10,9 @@ public class ModelNewGame extends Model<ViewNewGame> {
 
     public static final Logger LOGGER = LogManager.getLogger(ModelNewGame.class);
 
-    public void newGame(int port) {
+    public void newGame(String playerName, int port) {
         business.startServer(port);
-        business.startClient("localhost", port);
+        business.startClient(playerName, "localhost", port);
         view.renderViewLoadPlayer();
         view.renderMessage("The game is ready to start playing, load your ships!", "Info", INFORMATION_MESSAGE);
     }

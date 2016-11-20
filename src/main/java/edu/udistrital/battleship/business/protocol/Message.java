@@ -26,7 +26,7 @@ public class Message {
     private Message() {
     }
 
-    public static Message buildMessage() {
+    static Message buildMessage() {
         Message message = new Message();
         message.header = Header.BATTLESHIP;
         return message;
@@ -75,7 +75,7 @@ public class Message {
         return isResponse() && Objects.equals(this.response, response);
     }
 
-    public byte[] getBytes() {
+    public String getString() {
         StringBuilder messageBuilder = new StringBuilder()
                                            .append(header.getHeader());
         if (isCommand()) {
@@ -109,7 +109,27 @@ public class Message {
 
             }
         }
-        return messageBuilder.toString().getBytes();
+        return messageBuilder.toString();
+    }
+
+    public Command getCommand() {
+        return command;
+    }
+
+    public Response getResponse() {
+        return response;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Point getPoint() {
+        return point;
+    }
+
+    public AttackResponse getAttackResponse() {
+        return attackResponse;
     }
 
     @Override
