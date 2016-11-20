@@ -75,6 +75,9 @@ public enum Context {
         LOGGER.debug("Loading default triad into main frame");
         battleshipFrame.loadPanel(BattleshipFrame.VIEW_ID_START);
 
+        LOGGER.debug("Registering business observers");
+        business.registerObserver(modelPlayGame);
+
         LOGGER.info("Context started!");
     }
 

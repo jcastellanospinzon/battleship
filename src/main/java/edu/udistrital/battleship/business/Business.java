@@ -3,10 +3,14 @@ package edu.udistrital.battleship.business;
 import edu.udistrital.battleship.business.client.Client;
 import edu.udistrital.battleship.business.game.Board;
 import edu.udistrital.battleship.business.server.Server;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.util.Objects.nonNull;
 
 public class Business {
+
+    private List<BusinessObserver> observers;
 
     private Server server;
 
@@ -15,10 +19,19 @@ public class Business {
     private Board playerBoard;
 
     public Business() {
+        observers = new ArrayList<>();
     }
 
     public void init() {
 
+    }
+
+    public void registerObserver(BusinessObserver observer) {
+        observers.add(observer);
+    }
+    
+    public void notifyObservers() {
+        observers.forEach(observer -> observer.notifyChange());
     }
 
     public void startServer(int port) {
