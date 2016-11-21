@@ -4,12 +4,16 @@ import edu.udistrital.battleship.business.game.Point;
 import edu.udistrital.battleship.business.game.Ship;
 import edu.udistrital.battleship.business.game.Ship.Orientation;
 import edu.udistrital.battleship.client.mvc.Controller;
+import java.awt.Cursor;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.Optional;
+import org.apache.commons.lang3.tuple.Pair;
 
 import static edu.udistrital.battleship.client.swing.JCanvasBattleshipBoard.initPoint;
 
@@ -58,7 +62,9 @@ public class ControllerLoadPlayer extends Controller<ModelLoadPlayer, ViewLoadPl
 
     @Override
     public void mouseMoved(MouseEvent e) {
-
+        if (e.getSource().equals(view.getCanvasLoadPlayer())) {
+            mouseMovement(e.getX(), e.getY());
+        }
     }
 
     private void play() {
@@ -66,7 +72,7 @@ public class ControllerLoadPlayer extends Controller<ModelLoadPlayer, ViewLoadPl
     }
 
     private void click(int x, int y) {
-        if (isLoadingShips()) {
+        if (!allShipsAllocated()) {
             Optional<Point> optPoint = initPoint(x, y);
             String selectedShip = (String) view.getCmbShips().getSelectedItem();
             Ship.Type shipType = view.getShipTypes().get(selectedShip);
@@ -77,8 +83,27 @@ public class ControllerLoadPlayer extends Controller<ModelLoadPlayer, ViewLoadPl
         }
     }
 
-    private boolean isLoadingShips() {
-        return model.getBoard().getShips().size() < 10;
+    private void mouseMovement(int x, int y) {
+        Optional<Point> optPoint = initPoint(x, y);
+        if (!allShipsAllocated() && optPoint.isPresent()) {
+            String selectedShip = (String) view.getCmbShips().getSelectedItem();
+            Ship.Type shipType = view.getShipTypes().get(selectedShip);
+            Ship.Orientation shipOrientation = view.getBtnVerticalShip().isSelected() ? Orientation.VERTICAL : Orientation.HORIZONTAL;
+            if (shipFits(optPoint.get(), shipType, shipOrientation) && boardIsEmpty(optPoint.get(), shipType, shipOrientation)) {
+                Toolkit toolkit = Toolkit.getDefaultToolkit();
+                Image image = view.getCanvasLoadPlayer().getShipImages().get(Pair.of(shipType, shipOrientation));
+                Cursor cursor = toolkit.createCustomCursor(image, new java.awt.Point(0, 0), "load-player-cursor"); // FIXME Mejorar el cursor
+                view.getCanvasLoadPlayer().setCursor(cursor);
+            } else {
+                view.getCanvasLoadPlayer().setCursor(Cursor.getDefaultCursor()); // FIXME Poner algo que indique que esas casillas paila
+            }
+        } else {
+            view.getCanvasLoadPlayer().setCursor(Cursor.getDefaultCursor());
+        }
+    }
+
+    private boolean allShipsAllocated() {
+        return model.getBoard().allShipsAllocated();
     }
 
     private boolean shipFits(Point point, Ship.Type shipType, Ship.Orientation shipOrientation) {

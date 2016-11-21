@@ -74,6 +74,10 @@ public class Board {
         return nonNull(shotsCells[point.getRow().getArrayPosition()][point.getColumn().getArrayPosition()]);
     }
 
+    public boolean allShipsAllocated() {
+        return ships.size() == 10;
+    }
+
     public boolean allShipsSunken() {
         long shotCount = shots.stream().filter(shot -> shot.getResult() == Result.SUCCESS).count();
         return shotCount == 20;

@@ -52,4 +52,8 @@ public class ModelPlayGame extends Model<ViewPlayGame>
         return business.isGameFinished();
     }
 
+    public boolean isYourTurn() {
+        return true; // FIXME
+    }
+
 }

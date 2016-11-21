@@ -128,7 +128,7 @@ public class ViewLoadPlayer extends View<ControllerLoadPlayer> {
     }
 
     private void validatePlay() {
-        if (board.getShips().size() == 10) {
+        if (board.allShipsAllocated()) {
             btnPlay.setEnabled(true);
             cmbShips.setEnabled(false);
             btnVerticalShip.setEnabled(false);

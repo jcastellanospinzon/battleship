@@ -58,13 +58,17 @@ public class JCanvasBattleshipBoard extends JComponent {
         shipImages.put(Pair.of(Type.SUBMARINE, Orientation.VERTICAL), new ImageIcon(View.class.getResource("/images/battleship-submarinev-40.png")).getImage());
 
         shotImages = new HashMap<>();
-        shotImages.put(Result.SUCCESS, new ImageIcon(View.class.getResource("/images/battleship-shoot_success-40.png")).getImage());
-        shotImages.put(Result.MISS, new ImageIcon(View.class.getResource("/images/battleship-shoot_miss-40.png")).getImage());
+        shotImages.put(Result.SUCCESS, new ImageIcon(View.class.getResource("/images/battleship-shot_success-40.png")).getImage());
+        shotImages.put(Result.MISS, new ImageIcon(View.class.getResource("/images/battleship-shot_miss-40.png")).getImage());
 
         setSize(new Dimension(444, 444));
         setMinimumSize(new Dimension(444, 444));
         setMaximumSize(new Dimension(444, 444));
         setPreferredSize(new Dimension(444, 444));
+    }
+
+    public Map<Pair<Type, Orientation>, Image> getShipImages() {
+        return shipImages;
     }
 
     @Override
