@@ -36,7 +36,7 @@ public class ControllerLoadPlayer
     public void mouseClicked(MouseEvent e) {
         if (e.getSource().equals(view.getCanvasLoadPlayer()) &&
                 e.getButton() == MouseEvent.BUTTON1) {
-            click(e.getX(), e.getY());
+            click(e.getX(), e.getY(), e.isControlDown());
         }
     }
 
@@ -68,7 +68,7 @@ public class ControllerLoadPlayer
     @Override
     public void mouseMoved(MouseEvent e) {
         if (e.getSource().equals(view.getCanvasLoadPlayer())) {
-            mouseMovement(e.getX(), e.getY());
+            mouseMovement(e.getX(), e.getY(), e.isControlDown());
         }
     }
 
@@ -76,24 +76,24 @@ public class ControllerLoadPlayer
         model.playGame();
     }
 
-    private void click(int x, int y) {
+    private void click(int x, int y, boolean ctrlDown) {
         if (!allShipsAllocated()) {
             Optional<Point> optPoint = initPoint(x, y);
             String selectedShip = (String) view.getCmbShips().getSelectedItem();
             Ship.Type shipType = view.getShipTypes().get(selectedShip);
-            Ship.Orientation shipOrientation = view.getBtnVerticalShip().isSelected() ? Orientation.VERTICAL : Orientation.HORIZONTAL;
+            Ship.Orientation shipOrientation = ctrlDown ? Orientation.VERTICAL : Orientation.HORIZONTAL;
             if (optPoint.isPresent() && shipFits(optPoint.get(), shipType, shipOrientation) && boardIsEmpty(optPoint.get(), shipType, shipOrientation)) {
                 model.addShip(shipType, shipOrientation, optPoint.get());
             }
         }
     }
 
-    private void mouseMovement(int x, int y) {
+    private void mouseMovement(int x, int y, boolean ctrlDown) {
         Optional<Point> optPoint = initPoint(x, y);
         if (!allShipsAllocated() && optPoint.isPresent()) {
             String selectedShip = (String) view.getCmbShips().getSelectedItem();
             Ship.Type shipType = view.getShipTypes().get(selectedShip);
-            Ship.Orientation shipOrientation = view.getBtnVerticalShip().isSelected() ? Orientation.VERTICAL : Orientation.HORIZONTAL;
+            Ship.Orientation shipOrientation = ctrlDown ? Orientation.VERTICAL : Orientation.HORIZONTAL;
             if (shipFits(optPoint.get(), shipType, shipOrientation) && boardIsEmpty(optPoint.get(), shipType, shipOrientation)) {
                 Toolkit toolkit = Toolkit.getDefaultToolkit();
                 Image image = view.getShipCursors().get(Pair.of(shipType, shipOrientation));

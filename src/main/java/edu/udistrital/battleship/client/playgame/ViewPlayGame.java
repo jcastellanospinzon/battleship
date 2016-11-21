@@ -37,10 +37,10 @@ public class ViewPlayGame
         lblResult = new JLabel();
 
         rootPanel = new JPanel(new GridBagLayout());
-        rootPanel.add(lblPlayerBoard, new GridBagConstraints(0, 0, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(20, 10, 5, 20), 0, 0));
-        rootPanel.add(lblRivalBoard, new GridBagConstraints(1, 0, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(20, 20, 5, 10), 0, 0));
-        rootPanel.add(canvasPlayerBoard, new GridBagConstraints(0, 1, 1, 1, 1.0D, 1.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(5, 10, 20, 20), 0, 0));
-        rootPanel.add(canvasRivalBoard, new GridBagConstraints(1, 1, 1, 1, 1.0D, 1.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(5, 20, 20, 10), 0, 0));
+        rootPanel.add(lblPlayerBoard, new GridBagConstraints(0, 0, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(20, 20, 5, 10), 0, 0));
+        rootPanel.add(lblRivalBoard, new GridBagConstraints(1, 0, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(20, 10, 5, 20), 0, 0));
+        rootPanel.add(canvasPlayerBoard, new GridBagConstraints(0, 1, 1, 1, 1.0D, 1.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(5, 20, 20, 10), 0, 0));
+        rootPanel.add(canvasRivalBoard, new GridBagConstraints(1, 1, 1, 1, 1.0D, 1.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(5, 10, 20, 20), 0, 0));
         rootPanel.add(lblResult, new GridBagConstraints(0, 2, 2, 1, 1.0D, 1.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 20, 20, 20), 0, 0));
     }
 

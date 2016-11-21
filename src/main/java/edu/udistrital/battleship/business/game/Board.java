@@ -51,7 +51,7 @@ public class Board {
             new Ship(shipType, shipOrientation, point);
             return true;
         } catch (ShipDoesNotFitException e) {
-            LOGGER.error("Ship of type {} and orientation {} cannot be located at {}", shipType, shipOrientation, point, e);
+            LOGGER.warn("Ship of type {} and orientation {} cannot be located at {}", shipType, shipOrientation, point);
             return false;
         }
     }
@@ -62,7 +62,7 @@ public class Board {
             return temporalShip.getPoints().stream()
                        .anyMatch(temporalPoint -> nonNull(shipsCells[temporalPoint.getRow().getArrayPosition()][temporalPoint.getColumn().getArrayPosition()]));
         } catch (ShipDoesNotFitException e) {
-            LOGGER.error("Ship of type {} and orientation {} cannot be located at {}", shipType, shipOrientation, point, e);
+            LOGGER.warn("Ship of type {} and orientation {} cannot be located at {}", shipType, shipOrientation, point);
             return false;
         }
     }

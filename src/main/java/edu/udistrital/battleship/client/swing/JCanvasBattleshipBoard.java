@@ -68,10 +68,6 @@ public class JCanvasBattleshipBoard
         setPreferredSize(new Dimension(444, 444));
     }
 
-    public Map<Pair<Type, Orientation>, Image> getShipImages() {
-        return shipImages;
-    }
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

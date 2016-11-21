@@ -17,13 +17,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JToggleButton;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class ViewLoadPlayer
@@ -34,10 +32,6 @@ public class ViewLoadPlayer
     private JButton btnPlay;
 
     private JComboBox<String> cmbShips;
-
-    private JToggleButton btnVerticalShip;
-
-    private JToggleButton btnHorizontalShip;
 
     private List<String> availableShips;
 
@@ -106,25 +100,18 @@ public class ViewLoadPlayer
         btnPlay.addActionListener(controller);
         btnPlay.setEnabled(false);
 
-        JLabel lblInstructions = new JLabel("Select the ship, the orientation and set it in the board!");
+        JLabel lblSelection = new JLabel("Select the ship and set it in the board!");
+        JLabel lblOrientation = new JLabel("To change ship orientation, press 'Ctrl' key.");
         JLabel lblShips = new JLabel("Available ships");
         cmbShips = new JComboBox<>(new Vector<>(availableShips));
 
-        btnVerticalShip = new JToggleButton("Vertical");
-        btnHorizontalShip = new JToggleButton("Horizontal");
-        ButtonGroup btnGrpOrientation = new ButtonGroup();
-        btnGrpOrientation.add(btnHorizontalShip);
-        btnGrpOrientation.add(btnVerticalShip);
-        btnVerticalShip.setSelected(true);
-
         rootPanel = new JPanel(new GridBagLayout());
-        rootPanel.add(lblInstructions, new GridBagConstraints(0, 0, 4, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 20, 5, 20), 0, 0));
-        rootPanel.add(lblShips, new GridBagConstraints(0, 1, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(5, 5, 20, 20), 0, 0));
-        rootPanel.add(cmbShips, new GridBagConstraints(1, 1, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(5, 5, 20, 5), 0, 0));
-        rootPanel.add(btnVerticalShip, new GridBagConstraints(2, 1, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(5, 5, 20, 5), 0, 0));
-        rootPanel.add(btnHorizontalShip, new GridBagConstraints(3, 1, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(5, 20, 20, 5), 0, 0));
-        rootPanel.add(canvasLoadPlayer, new GridBagConstraints(0, 2, 4, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 20, 20, 20), 0, 0));
-        rootPanel.add(btnPlay, new GridBagConstraints(0, 3, 4, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 20, 20, 20), 0, 0));
+        rootPanel.add(lblSelection, new GridBagConstraints(0, 0, 2, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 20, 5, 20), 0, 0));
+        rootPanel.add(lblOrientation, new GridBagConstraints(0, 1, 2, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(5, 20, 5, 20), 0, 0));
+        rootPanel.add(lblShips, new GridBagConstraints(0, 2, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(5, 20, 20, 5), 0, 0));
+        rootPanel.add(cmbShips, new GridBagConstraints(1, 2, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(5, 5, 20, 20), 0, 0));
+        rootPanel.add(canvasLoadPlayer, new GridBagConstraints(0, 3, 2, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 20, 20, 20), 0, 0));
+        rootPanel.add(btnPlay, new GridBagConstraints(0, 4, 2, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 20, 20, 20), 0, 0));
     }
 
     public Map<Pair<Type, Orientation>, Image> getShipCursors() {
@@ -141,14 +128,6 @@ public class ViewLoadPlayer
 
     public JComboBox<String> getCmbShips() {
         return cmbShips;
-    }
-
-    public JToggleButton getBtnHorizontalShip() {
-        return btnHorizontalShip;
-    }
-
-    public JToggleButton getBtnVerticalShip() {
-        return btnVerticalShip;
     }
 
     public JCanvasBattleshipBoard getCanvasLoadPlayer() {
@@ -170,8 +149,6 @@ public class ViewLoadPlayer
         if (board.allShipsAllocated()) {
             btnPlay.setEnabled(true);
             cmbShips.setEnabled(false);
-            btnVerticalShip.setEnabled(false);
-            btnHorizontalShip.setEnabled(false);
         }
     }
 
