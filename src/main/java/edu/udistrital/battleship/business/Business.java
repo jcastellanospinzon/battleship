@@ -1,15 +1,15 @@
 package edu.udistrital.battleship.business;
 
-import edu.udistrital.battleship.business.client.Client;
 import edu.udistrital.battleship.business.game.Board;
 import edu.udistrital.battleship.business.game.Point;
 import edu.udistrital.battleship.business.game.Shot;
 import edu.udistrital.battleship.business.game.Shot.Result;
+import edu.udistrital.battleship.business.network.Client;
+import edu.udistrital.battleship.business.network.Server;
 import edu.udistrital.battleship.business.protocol.AttackResponse;
 import edu.udistrital.battleship.business.protocol.Command;
 import edu.udistrital.battleship.business.protocol.Protocol;
 import edu.udistrital.battleship.business.protocol.Response;
-import edu.udistrital.battleship.business.server.Server;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;

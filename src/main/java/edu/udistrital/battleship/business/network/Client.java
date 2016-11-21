@@ -1,8 +1,7 @@
-package edu.udistrital.battleship.business.client;
+package edu.udistrital.battleship.business.network;
 
 import edu.udistrital.battleship.business.Business;
 import edu.udistrital.battleship.business.protocol.Command;
-import edu.udistrital.battleship.business.protocol.InvalidMessageException;
 import edu.udistrital.battleship.business.protocol.Message;
 import edu.udistrital.battleship.business.protocol.Protocol;
 import edu.udistrital.battleship.business.protocol.Response;
@@ -16,13 +15,11 @@ import org.apache.logging.log4j.Logger;
 import static java.util.Objects.nonNull;
 
 public class Client
-    implements Runnable {
+    extends AbstractClient {
 
     private static final Logger LOGGER = LogManager.getLogger(Client.class);
 
     private final Business business;
-
-    private boolean running;
 
     private String playerName;
 
@@ -30,17 +27,9 @@ public class Client
 
     private int port;
 
-    private Message lastMessage;
-
-    private DataOutputStream dataOutputStream;
-
     public Client(Business business) {
+        super();
         this.business = business;
-        running = false;
-    }
-
-    public boolean isRunning() {
-        return running;
     }
 
     public void startClient(String playerName, String hostname, int port) {
@@ -48,9 +37,7 @@ public class Client
         this.playerName = playerName;
         this.hostname = hostname;
         this.port = port;
-        running = true;
-        Thread thread = new Thread(this);
-        thread.start();
+        startThreadClient();
     }
 
     public void stopClient() {
@@ -63,7 +50,7 @@ public class Client
              DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
              DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream())) {
             LOGGER.info("Client Socket has started succesfully");
-            referenceOutputStream(dataOutputStream);
+            setDataOutputStream(dataOutputStream);
 
             sendMessage(Protocol.buildMessage()
                             .withCommand(Command.CONNECT)
@@ -72,22 +59,14 @@ public class Client
             while (running) {
                 String strReceivedMessage = dataInputStream.readUTF();
                 LOGGER.debug("Client received Message {}", strReceivedMessage);
-
-                Command lastMessageCommand = nonNull(lastMessage) ? lastMessage.getCommand() : null;
-                Message message = Protocol.getMessageFromString(strReceivedMessage, lastMessageCommand);
-                processMessage(message);
+                translateMessage(strReceivedMessage);
             }
-        } catch (InvalidMessageException | IOException e) {
+        } catch (IOException e) {
             LOGGER.error("Oops! There is an unexpected error", e);
-            throw new AssertionError("Player Connection Error", e);
         }
     }
 
-    private void referenceOutputStream(DataOutputStream dataOutputStream) {
-        this.dataOutputStream = dataOutputStream;
-    }
-
-    private void processMessage(Message message) {
+    protected void processMessage(Message message) {
         if (message.getCommand() == Command.ATTACK) {
             business.receiveShot(message.getPoint());
         }
@@ -95,20 +74,6 @@ public class Client
             business.doShotResponse(lastMessage.getPoint(), message.getAttackResponse());
         }
         lastMessage = null;
-    }
-
-    public void sendMessage(Message message) {
-        try {
-            lastMessage = message;
-            String strConnectionMessage = message.getString();
-
-            LOGGER.debug("Client writing Message {}", strConnectionMessage);
-            dataOutputStream.writeUTF(strConnectionMessage);
-            dataOutputStream.flush();
-        } catch (IOException e) {
-            LOGGER.error("Oops! There is an unexpected error", e);
-            throw new AssertionError("Player Connection Error", e);
-        }
     }
 
 }

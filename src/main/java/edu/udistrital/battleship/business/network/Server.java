@@ -1,4 +1,4 @@
-package edu.udistrital.battleship.business.server;
+package edu.udistrital.battleship.business.network;
 
 import edu.udistrital.battleship.business.Business;
 import edu.udistrital.battleship.business.protocol.AttackResponse;
