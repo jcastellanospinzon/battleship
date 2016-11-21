@@ -86,7 +86,7 @@ public class ControllerLoadPlayer extends Controller<ModelLoadPlayer, ViewLoadPl
     }
 
     private boolean boardIsEmpty(Point point, Ship.Type shipType, Ship.Orientation shipOrientation) {
-        return model.getBoard().thereIsShip(point, shipType, shipOrientation);
+        return !model.getBoard().thereIsShip(point, shipType, shipOrientation);
     }
 
 }

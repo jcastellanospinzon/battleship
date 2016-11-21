@@ -4,12 +4,15 @@ import edu.udistrital.battleship.business.protocol.Command;
 import edu.udistrital.battleship.business.protocol.InvalidMessageException;
 import edu.udistrital.battleship.business.protocol.Message;
 import edu.udistrital.battleship.business.protocol.Protocol;
+import edu.udistrital.battleship.business.protocol.Response;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import static java.util.Objects.nonNull;
 
 public class ServerClient implements Runnable {
 
@@ -20,6 +23,8 @@ public class ServerClient implements Runnable {
     private boolean running;
 
     private Socket clientSocket;
+
+    private Message lastMessage;
 
     private DataOutputStream dataOutputStream;
 
@@ -56,12 +61,9 @@ public class ServerClient implements Runnable {
                 String strReceivedMessage = dataInputStream.readUTF();
                 LOGGER.debug("Server Client received Message {}", strReceivedMessage);
 
-                Message message = Protocol.getMessageFromString(strReceivedMessage, null);
-                Message responseMessage = processMessage(message);
-
-                LOGGER.debug("Server Client writing Message {}", responseMessage.getString());
-                dataOutputStream.writeUTF(responseMessage.getString());
-                dataOutputStream.flush();
+                Command lastMessageCommand = nonNull(lastMessage) ? lastMessage.getCommand() : null;
+                Message message = Protocol.getMessageFromString(strReceivedMessage, lastMessageCommand);
+                processMessage(message);
             }
         } catch (InvalidMessageException | IOException e) {
             LOGGER.error("Oops! There is an unexpected error", e);
@@ -73,24 +75,30 @@ public class ServerClient implements Runnable {
         this.dataOutputStream = dataOutputStream;
     }
 
-    private Message processMessage(Message message) {
+    private void processMessage(Message message) {
         if (message.getCommand() == Command.CONNECT) {
-            return server.connectionMessage(this, message);
+            Message responseMessage = server.connectionMessage(this, message);
+            sendMessage(responseMessage);
         }
-        if(message.getCommand() == Command.READY) {
-            return server.readyMessage(this, message);
+        if (message.getCommand() == Command.READY) {
+            Message responseMessage = server.readyMessage(this, message);
+            sendMessage(responseMessage);
         }
-        if(message.getCommand() == Command.ATTACK) {
-            return server.attackMessage(this, message);
+        if (message.getCommand() == Command.ATTACK) {
+            server.attackMessage(this, message);
         }
-        return null;
+        if (message.getResponse() == Response.OKAY && nonNull(lastMessage) && lastMessage.getCommand() == Command.ATTACK) {
+            server.attackResponse(this, message);
+        }
+        lastMessage = null;
     }
 
     public void sendMessage(Message message) {
         try {
+            lastMessage = message;
             String strConnectionMessage = message.getString();
 
-            LOGGER.debug("Client writing Message {}", strConnectionMessage);
+            LOGGER.debug("Server Client writing Message {}", strConnectionMessage);
             dataOutputStream.writeUTF(strConnectionMessage);
             dataOutputStream.flush();
         } catch (IOException e) {

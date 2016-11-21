@@ -21,9 +21,9 @@ public class Shot {
 
     public enum Result {
 
-        SUCCES,
+        SUCCESS,
 
-        MISS;
+        MISS
 
     }
 

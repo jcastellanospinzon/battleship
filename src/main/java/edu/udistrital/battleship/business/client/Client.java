@@ -1,9 +1,11 @@
 package edu.udistrital.battleship.business.client;
 
+import edu.udistrital.battleship.business.Business;
 import edu.udistrital.battleship.business.protocol.Command;
 import edu.udistrital.battleship.business.protocol.InvalidMessageException;
 import edu.udistrital.battleship.business.protocol.Message;
 import edu.udistrital.battleship.business.protocol.Protocol;
+import edu.udistrital.battleship.business.protocol.Response;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -11,9 +13,13 @@ import java.net.Socket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static java.util.Objects.nonNull;
+
 public class Client implements Runnable {
 
     private static final Logger LOGGER = LogManager.getLogger(Client.class);
+
+    private final Business business;
 
     private boolean running;
 
@@ -23,11 +29,12 @@ public class Client implements Runnable {
 
     private int port;
 
-    private Command lastCommand;
+    private Message lastMessage;
 
     private DataOutputStream dataOutputStream;
 
-    public Client() {
+    public Client(Business business) {
+        this.business = business;
         running = false;
     }
 
@@ -57,21 +64,16 @@ public class Client implements Runnable {
             LOGGER.info("Client Socket has started succesfully");
             referenceOutputStream(dataOutputStream);
 
-            lastCommand = Command.CONNECT;
-            String strConnectionMessage = Protocol.buildMessage()
-                                              .withCommand(Command.CONNECT)
-                                              .withName(playerName)
-                                              .getString();
-
-            LOGGER.debug("Client writing Message {}", strConnectionMessage);
-            dataOutputStream.writeUTF(strConnectionMessage);
-            dataOutputStream.flush();
+            sendMessage(Protocol.buildMessage()
+                            .withCommand(Command.CONNECT)
+                            .withName(playerName));
 
             while (running) {
                 String strReceivedMessage = dataInputStream.readUTF();
                 LOGGER.debug("Client received Message {}", strReceivedMessage);
 
-                Message message = Protocol.getMessageFromString(strReceivedMessage, lastCommand);
+                Command lastMessageCommand = nonNull(lastMessage) ? lastMessage.getCommand() : null;
+                Message message = Protocol.getMessageFromString(strReceivedMessage, lastMessageCommand);
                 processMessage(message);
             }
         } catch (InvalidMessageException | IOException e) {
@@ -85,12 +87,18 @@ public class Client implements Runnable {
     }
 
     private void processMessage(Message message) {
-
+        if (message.getCommand() == Command.ATTACK) {
+            business.receiveShot(message.getPoint());
+        }
+        if (message.getResponse() == Response.OKAY && nonNull(lastMessage) && lastMessage.getCommand() == Command.ATTACK) {
+            business.doShotResponse(lastMessage.getPoint(), message.getAttackResponse());
+        }
+        lastMessage = null;
     }
 
     public void sendMessage(Message message) {
         try {
-            lastCommand = message.getCommand();
+            lastMessage = message;
             String strConnectionMessage = message.getString();
 
             LOGGER.debug("Client writing Message {}", strConnectionMessage);

@@ -27,13 +27,7 @@ public class ViewLoadPlayer extends View<ControllerLoadPlayer> {
 
     private JButton btnPlay;
 
-    private JLabel lblInstructions;
-
-    private JLabel lblShips;
-
     private JComboBox<String> cmbShips;
-
-    private ButtonGroup btnGrpOrientation;
 
     private JToggleButton btnVerticalShip;
 
@@ -80,25 +74,25 @@ public class ViewLoadPlayer extends View<ControllerLoadPlayer> {
         btnPlay.addActionListener(controller);
         btnPlay.setEnabled(false);
 
-        lblInstructions = new JLabel("Select the ship, the orientation and set it in the board!");
-        lblShips = new JLabel("Available ships");
+        JLabel lblInstructions = new JLabel("Select the ship, the orientation and set it in the board!");
+        JLabel lblShips = new JLabel("Available ships");
         cmbShips = new JComboBox<>(new Vector<>(availableShips));
 
         btnVerticalShip = new JToggleButton("Vertical");
         btnHorizontalShip = new JToggleButton("Horizontal");
-        btnGrpOrientation = new ButtonGroup();
+        ButtonGroup btnGrpOrientation = new ButtonGroup();
         btnGrpOrientation.add(btnHorizontalShip);
         btnGrpOrientation.add(btnVerticalShip);
         btnVerticalShip.setSelected(true);
 
         rootPanel = new JPanel(new GridBagLayout());
-        rootPanel.add(canvasLoadPlayer, new GridBagConstraints(0, 0, 1, 3, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 20, 5, 20), 0, 0));
-        rootPanel.add(btnPlay, new GridBagConstraints(0, 3, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(5, 20, 20, 20), 0, 0));
-        rootPanel.add(lblInstructions, new GridBagConstraints(1, 0, 3, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-        rootPanel.add(lblShips, new GridBagConstraints(1, 1, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-        rootPanel.add(cmbShips, new GridBagConstraints(2, 1, 2, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-        rootPanel.add(btnVerticalShip, new GridBagConstraints(2, 2, 1, 1, 0.0D, 0.0D, GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-        rootPanel.add(btnHorizontalShip, new GridBagConstraints(3, 2, 1, 1, 0.0D, 0.0D, GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+        rootPanel.add(lblInstructions, new GridBagConstraints(0, 0, 4, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 20, 5, 20), 0, 0));
+        rootPanel.add(lblShips, new GridBagConstraints(0, 1, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(5, 5, 20, 20), 0, 0));
+        rootPanel.add(cmbShips, new GridBagConstraints(1, 1, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(5, 5, 20, 5), 0, 0));
+        rootPanel.add(btnVerticalShip, new GridBagConstraints(2, 1, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(5, 5, 20, 5), 0, 0));
+        rootPanel.add(btnHorizontalShip, new GridBagConstraints(3, 1, 1, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(5, 20, 20, 5), 0, 0));
+        rootPanel.add(canvasLoadPlayer, new GridBagConstraints(0, 2, 4, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 20, 20, 20), 0, 0));
+        rootPanel.add(btnPlay, new GridBagConstraints(0, 3, 4, 1, 0.0D, 0.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 20, 20, 20), 0, 0));
     }
 
     public JButton getBtnPlay() {

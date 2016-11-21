@@ -1,5 +1,6 @@
 package edu.udistrital.battleship.business.server;
 
+import edu.udistrital.battleship.business.protocol.AttackResponse;
 import edu.udistrital.battleship.business.protocol.Message;
 import edu.udistrital.battleship.business.protocol.Protocol;
 import edu.udistrital.battleship.business.protocol.Response;
@@ -9,6 +10,8 @@ import java.net.Socket;
 import java.util.Objects;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import static edu.udistrital.battleship.business.protocol.Protocol.buildMessage;
 
 public class Server implements Runnable {
 
@@ -78,13 +81,13 @@ public class Server implements Runnable {
         }
     }
 
-    public synchronized Message connectionMessage(ServerClient serverClient, Message message) {
-        return Protocol.buildMessage()
+    public Message connectionMessage(ServerClient serverClient, Message message) {
+        return buildMessage()
                    .withResponse(Response.OKAY)
                    .withName(message.getName());
     }
 
-    public synchronized Message readyMessage(ServerClient serverClient, Message message) {
+    public Message readyMessage(ServerClient serverClient, Message message) {
         if (Objects.equals(serverClient, homePlayer)) {
             homePlayerReady = true;
         } else {
@@ -94,25 +97,34 @@ public class Server implements Runnable {
             LOGGER.debug("Both players are ready!");
             playerTurn = homePlayer;
         }
-        return Protocol.buildMessage()
+        return buildMessage()
                    .withResponse(Response.OKAY);
     }
 
-    public synchronized Message attackMessage(ServerClient serverClient, Message message) {
+    public void attackMessage(ServerClient serverClient, Message message) {
         if (homePlayerReady && guestPlayerReady && !waitingAttackResponse && Objects.equals(serverClient, playerTurn)) {
             waitingAttackResponse = true;
-            return null;
+            getRivalFor(serverClient).sendMessage(message);
         } else {
-            return Protocol.buildMessage()
-                       .withResponse(Response.NOT_OKAY);
+            serverClient.sendMessage(Protocol.buildMessage()
+                                         .withResponse(Response.NOT_OKAY));
         }
     }
 
-    public synchronized void attackResponse(ServerClient serverClient, Message message) {
-        if (homePlayerReady && guestPlayerReady && waitingAttackResponse && Objects.equals(serverClient, playerTurn)) {
+    private ServerClient getRivalFor(ServerClient serverClient) {
+        return Objects.equals(serverClient, homePlayer) ? guestPlayer : homePlayer;
+    }
 
-
+    public void attackResponse(ServerClient serverClient, Message message) {
+        if (homePlayerReady && guestPlayerReady && waitingAttackResponse && !Objects.equals(serverClient, playerTurn)) {
+            getRivalFor(serverClient).sendMessage(message);
+            if (message.getAttackResponse() == AttackResponse.NO_IMPACT) {
+                playerTurn = serverClient;
+            }
             waitingAttackResponse = false;
+        } else {
+            serverClient.sendMessage(Protocol.buildMessage()
+                                         .withResponse(Response.NOT_OKAY));
         }
     }
 

@@ -1,11 +1,12 @@
 package edu.udistrital.battleship.business.game;
 
+import edu.udistrital.battleship.business.game.Shot.Result;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 public class Board {
 
@@ -53,11 +54,29 @@ public class Board {
         try {
             Ship temporalShip = new Ship(shipType, shipOrientation, point);
             return temporalShip.getPoints().stream()
-                       .allMatch(temporalPoint -> isNull(shipsCells[temporalPoint.getRow().getArrayPosition()][temporalPoint.getColumn().getArrayPosition()]));
+                       .anyMatch(temporalPoint -> nonNull(shipsCells[temporalPoint.getRow().getArrayPosition()][temporalPoint.getColumn().getArrayPosition()]));
         } catch (ShipDoesNotFitException e) {
             LOGGER.error("Ship of type {} and orientation {} cannot be located at {}", shipType, shipOrientation, point, e);
             return false;
         }
+    }
+
+    public boolean thereIsAnyShip(Point point) {
+        return nonNull(shipsCells[point.getRow().getArrayPosition()][point.getColumn().getArrayPosition()]);
+    }
+
+    public void addShot(Shot shot) {
+        shots.add(shot);
+        shotsCells[shot.getPoint().getRow().getArrayPosition()][shot.getPoint().getColumn().getArrayPosition()] = shot;
+    }
+
+    public boolean thereIsShot(Point point) {
+        return nonNull(shotsCells[point.getRow().getArrayPosition()][point.getColumn().getArrayPosition()]);
+    }
+
+    public boolean allShipsSunken() {
+        long shotCount = shots.stream().filter(shot -> shot.getResult() == Result.SUCCESS).count();
+        return shotCount == 20;
     }
 
 }

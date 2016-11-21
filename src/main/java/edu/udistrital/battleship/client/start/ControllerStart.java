@@ -4,9 +4,6 @@ import edu.udistrital.battleship.client.mvc.Controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * Created by julian on 11/10/16.
- */
 public class ControllerStart extends Controller<ModelStart, ViewStart> implements ActionListener {
 
     @Override

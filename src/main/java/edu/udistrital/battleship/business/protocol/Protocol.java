@@ -61,7 +61,7 @@ public final class Protocol {
             throw new InvalidMessageException("The current message " + strMessage + " isn't a valid message. Command validation fail.");
         } else if (optCommand.isPresent()) {
             message.withCommand(optCommand.get());
-        } else {
+        } else if (optResponse.isPresent()) {
             message.withResponse(optResponse.get());
         }
         return strParameters;
@@ -98,7 +98,7 @@ public final class Protocol {
                 Optional<Column> optColumn = Column.fromCode(splitStrParameters[0]);
                 if (!optRow.isPresent() || !optColumn.isPresent()) {
                     throw new InvalidMessageException("The current message " + strMessage + " isn't a valid message. Point validation fail.");
-                } else {
+                } else if (optRow.isPresent() && optColumn.isPresent()) {
                     message.withPoint(new Point(optRow.get(), optColumn.get()));
                 }
             }

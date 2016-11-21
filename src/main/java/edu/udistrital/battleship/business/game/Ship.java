@@ -16,15 +16,12 @@ public class Ship {
 
     private final List<Point> points;
 
-    private int life;
-
     public Ship(Type type, Orientation orientation, Point referencePoint)
         throws ShipDoesNotFitException {
         this.type = type;
         this.orientation = orientation;
         this.referencePoint = referencePoint;
         this.points = Collections.unmodifiableList(calculatePoints(type, orientation, referencePoint));
-        life = type.length;
     }
 
     public Type getType() {
@@ -41,10 +38,6 @@ public class Ship {
 
     public List<Point> getPoints() {
         return points;
-    }
-
-    public int getLife() {
-        return life;
     }
 
     private static List<Point> calculatePoints(Type type, Orientation orientation, Point referencePoint)
@@ -82,7 +75,7 @@ public class Ship {
 
         VERTICAL,
 
-        HORIZONTAL;
+        HORIZONTAL
 
     }
 

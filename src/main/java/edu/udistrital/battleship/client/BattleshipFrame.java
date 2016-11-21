@@ -47,7 +47,7 @@ public class BattleshipFrame {
         frmMain.setIconImages(Arrays.asList(new ImageIcon(View.class.getResource("/images/battleship-icon-32.png")).getImage(),
                                             new ImageIcon(View.class.getResource("/images/battleship-icon-64.png")).getImage(),
                                             new ImageIcon(View.class.getResource("/images/battleship-icon-128.png")).getImage()));
-        frmMain.setSize(1024, 768);
+        frmMain.setSize(960, 720);
         frmMain.setResizable(false);
         frmMain.setLocationRelativeTo(null);
         frmMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

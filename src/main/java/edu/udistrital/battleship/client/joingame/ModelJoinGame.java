@@ -9,7 +9,7 @@ public class ModelJoinGame extends Model<ViewJoinGame> {
     public void joinGame(String playerName, String hostname, int port) {
         business.startClient(playerName, hostname, port);
         view.renderViewLoadPlayer();
-        view.renderMessage("El juego está listo para que empieces a jugar, carga tu tablero!", "Info", INFORMATION_MESSAGE);
+        view.renderMessage("The game is ready to start playing, load your ships!", "Info", INFORMATION_MESSAGE);
     }
 
 }
