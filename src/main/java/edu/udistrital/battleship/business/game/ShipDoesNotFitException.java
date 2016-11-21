@@ -1,6 +1,7 @@
 package edu.udistrital.battleship.business.game;
 
-public class ShipDoesNotFitException extends Exception {
+public class ShipDoesNotFitException
+    extends Exception {
 
     public ShipDoesNotFitException() {
         super();

@@ -76,8 +76,7 @@ public class Message {
     }
 
     public String getString() {
-        StringBuilder messageBuilder = new StringBuilder()
-                                           .append(header.getHeader());
+        StringBuilder messageBuilder = new StringBuilder().append(header.getHeader());
         if (isCommand()) {
             messageBuilder
                 .append(COMMAND_SEPARATOR)
@@ -88,7 +87,8 @@ public class Message {
                     .append(name);
             }
             if (nonNull(point)) {
-                messageBuilder.append(PARAM_SEPARATOR)
+                messageBuilder
+                    .append(PARAM_SEPARATOR)
                     .append(point.getColumn().getCode())
                     .append(PARAM_SEPARATOR)
                     .append(point.getRow().getCode());
@@ -106,7 +106,6 @@ public class Message {
                 messageBuilder
                     .append(PARAM_SEPARATOR)
                     .append(attackResponse.getAttackResponse());
-
             }
         }
         return messageBuilder.toString();
@@ -137,12 +136,7 @@ public class Message {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Message message = (Message) o;
-        return header == message.header &&
-                   command == message.command &&
-                   response == message.response &&
-                   Objects.equals(name, message.name) &&
-                   Objects.equals(point, message.point) &&
-                   attackResponse == message.attackResponse;
+        return (header == message.header) && (command == message.command) && (response == message.response) && Objects.equals(name, message.name) && Objects.equals(point, message.point) && (attackResponse == message.attackResponse);
     }
 
     @Override

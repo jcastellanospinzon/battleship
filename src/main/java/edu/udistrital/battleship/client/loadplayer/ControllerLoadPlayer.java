@@ -17,8 +17,13 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import static edu.udistrital.battleship.client.swing.JCanvasBattleshipBoard.initPoint;
 
-public class ControllerLoadPlayer extends Controller<ModelLoadPlayer, ViewLoadPlayer>
+public class ControllerLoadPlayer
+    extends Controller<ModelLoadPlayer, ViewLoadPlayer>
     implements ActionListener, MouseListener, MouseMotionListener {
+
+    public ControllerLoadPlayer() {
+        super();
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -91,11 +96,14 @@ public class ControllerLoadPlayer extends Controller<ModelLoadPlayer, ViewLoadPl
             Ship.Orientation shipOrientation = view.getBtnVerticalShip().isSelected() ? Orientation.VERTICAL : Orientation.HORIZONTAL;
             if (shipFits(optPoint.get(), shipType, shipOrientation) && boardIsEmpty(optPoint.get(), shipType, shipOrientation)) {
                 Toolkit toolkit = Toolkit.getDefaultToolkit();
-                Image image = view.getCanvasLoadPlayer().getShipImages().get(Pair.of(shipType, shipOrientation));
-                Cursor cursor = toolkit.createCustomCursor(image, new java.awt.Point(0, 0), "load-player-cursor"); // FIXME Mejorar el cursor
+                Image image = view.getShipCursors().get(Pair.of(shipType, shipOrientation));
+                Cursor cursor = toolkit.createCustomCursor(image, new java.awt.Point(0, 0), "load-player-cursor");
                 view.getCanvasLoadPlayer().setCursor(cursor);
             } else {
-                view.getCanvasLoadPlayer().setCursor(Cursor.getDefaultCursor()); // FIXME Poner algo que indique que esas casillas paila
+                Toolkit toolkit = Toolkit.getDefaultToolkit();
+                Image image = view.getShipRCursors().get(Pair.of(shipType, shipOrientation));
+                Cursor cursor = toolkit.createCustomCursor(image, new java.awt.Point(0, 0), "load-player-cursor");
+                view.getCanvasLoadPlayer().setCursor(cursor);
             }
         } else {
             view.getCanvasLoadPlayer().setCursor(Cursor.getDefaultCursor());

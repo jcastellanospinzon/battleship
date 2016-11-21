@@ -14,9 +14,13 @@ import javax.swing.ImageIcon;
 
 import static edu.udistrital.battleship.client.swing.JCanvasBattleshipBoard.initPoint;
 
-public class ControllerPlayGame extends Controller<ModelPlayGame, ViewPlayGame>
+public class ControllerPlayGame
+    extends Controller<ModelPlayGame, ViewPlayGame>
     implements MouseListener, MouseMotionListener {
 
+    public ControllerPlayGame() {
+        super();
+    }
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -68,9 +72,9 @@ public class ControllerPlayGame extends Controller<ModelPlayGame, ViewPlayGame>
     private void mouseMovement(int x, int y) {
         Optional<Point> optPoint = initPoint(x, y);
         if (isYourTurn()) {
-            if(optPoint.isPresent() &&  !isGameFinished()) {
+            if (optPoint.isPresent() && !isGameFinished()) {
                 Toolkit toolkit = Toolkit.getDefaultToolkit();
-                if( enemyBoardIsEmpty(optPoint.get())) {
+                if (enemyBoardIsEmpty(optPoint.get())) {
                     Image image = new ImageIcon(View.class.getResource("/images/battleship-cursor-shot-40.png")).getImage();
                     Cursor cursor = toolkit.createCustomCursor(image, new java.awt.Point(0, 0), "play-game-cursor");
                     view.getCanvasRivalBoard().setCursor(cursor);
@@ -88,7 +92,7 @@ public class ControllerPlayGame extends Controller<ModelPlayGame, ViewPlayGame>
     }
 
     private boolean isYourTurn() {
-        return model.isYourTurn();
+        return model.isPlayerTurn();
     }
 
     private boolean isGameFinished() {

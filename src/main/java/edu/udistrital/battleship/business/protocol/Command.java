@@ -22,7 +22,7 @@ public enum Command {
         return command;
     }
 
-    public static Optional<Command> byCommand(String command) {
+    public static Optional<Command> fromCommand(String command) {
         return Arrays.stream(Command.values())
                    .filter(c -> Objects.equals(c.command, command))
                    .findFirst();

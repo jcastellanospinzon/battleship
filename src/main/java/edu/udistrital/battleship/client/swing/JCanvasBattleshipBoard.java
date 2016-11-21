@@ -22,7 +22,8 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import static java.util.Objects.nonNull;
 
-public class JCanvasBattleshipBoard extends JComponent {
+public class JCanvasBattleshipBoard
+    extends JComponent {
 
     private Board board;
 
@@ -95,7 +96,7 @@ public class JCanvasBattleshipBoard extends JComponent {
     }
 
     private void paintShots(Graphics g) {
-        for(Shot shot : board.getShots()) {
+        for (Shot shot : board.getShots()) {
             int cellReferencePointX = cellReferencePoint.get(shot.getPoint().getColumn().getArrayPosition());
             int cellReferencePointY = cellReferencePoint.get(shot.getPoint().getRow().getArrayPosition());
             Image shotImage = shotImages.get(shot.getResult());

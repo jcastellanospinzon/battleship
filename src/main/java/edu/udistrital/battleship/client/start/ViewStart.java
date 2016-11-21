@@ -8,13 +8,15 @@ import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class ViewStart extends View<ControllerStart> {
+public class ViewStart
+    extends View<ControllerStart> {
 
     private JButton btnNewGame;
 
     private JButton btnJoinGame;
 
     public ViewStart() {
+        super();
     }
 
     @Override

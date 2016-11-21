@@ -7,12 +7,14 @@ import edu.udistrital.battleship.client.mvc.Model;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class ModelPlayGame extends Model<ViewPlayGame>
+public class ModelPlayGame
+    extends Model<ViewPlayGame>
     implements BusinessObserver {
 
     private static final Logger LOGGER = LogManager.getLogger(ModelPlayGame.class);
 
     public ModelPlayGame() {
+        super();
     }
 
     @Override
@@ -20,6 +22,7 @@ public class ModelPlayGame extends Model<ViewPlayGame>
         super.init();
         view.drawPlayerBoard(business.getPlayerBoard());
         view.drawRivalBoard(business.getRivalBoard());
+        view.drawResult("Wait for your turn!", false);
     }
 
     @Override
@@ -28,32 +31,34 @@ public class ModelPlayGame extends Model<ViewPlayGame>
         view.drawRivalBoard(business.getRivalBoard());
         if (business.isGameFinished()) {
             if (business.isPlayerWin()) {
-                view.drawResult("You WIN!");
+                view.drawResult("You WIN!", true);
             } else {
-                view.drawResult("You LOSE!");
+                view.drawResult("You LOSE!", false);
+            }
+        } else {
+            if (business.isPlayerTurn()) {
+                view.drawResult("Your Turn!", true);
+            } else {
+                view.drawResult("Wait for your turn!", false);
             }
         }
-    }
-
-    public Board getPlayerBoard() {
-        return business.getPlayerBoard();
     }
 
     public Board getRivalBoard() {
         return business.getRivalBoard();
     }
 
-    public void shot(Point point) {
-        LOGGER.debug("Shooting at point: {}", point);
-        business.doShot(point);
-    }
-
     public boolean isGameFinished() {
         return business.isGameFinished();
     }
 
-    public boolean isYourTurn() {
-        return true; // FIXME
+    public boolean isPlayerTurn() {
+        return business.isPlayerTurn();
+    }
+
+    public void shot(Point point) {
+        LOGGER.debug("Shooting at point: {}", point);
+        business.doShot(point);
     }
 
 }

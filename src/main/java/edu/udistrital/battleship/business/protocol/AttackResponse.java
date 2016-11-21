@@ -22,9 +22,9 @@ public enum AttackResponse {
         return attackResponse;
     }
 
-    public static Optional<AttackResponse> byAttackResponse(String attackResponse) {
+    public static Optional<AttackResponse> fromAttackResponse(String attackResponse) {
         return Arrays.stream(AttackResponse.values())
-                   .filter(r -> Objects.equals(r.attackResponse, attackResponse))
+                   .filter(ar -> Objects.equals(ar.attackResponse, attackResponse))
                    .findFirst();
     }
 

@@ -35,11 +35,13 @@ public class Business {
 
     private boolean playerWin;
 
-    private boolean rivalWin;
+    private boolean playerTurn;
 
     public Business() {
         observers = new ArrayList<>();
         gameFinished = false;
+        playerWin = false;
+        playerTurn = false;
     }
 
     public void init() {
@@ -55,8 +57,8 @@ public class Business {
     }
 
     public void startServer(int port) {
-        LOGGER.debug("Starting server...");
-        server = new Server();
+        LOGGER.info("Starting server at port: {} ...", port);
+        server = new Server(this);
         server.startServer(port);
     }
 
@@ -69,7 +71,7 @@ public class Business {
     }
 
     public void startClient(String playerName, String hostname, int port) {
-        LOGGER.debug("Starting client...");
+        LOGGER.info("Starting client at hostname: {} and port: {} ...", hostname, port);
         client = new Client(this);
         client.startClient(playerName, hostname, port);
     }
@@ -83,7 +85,7 @@ public class Business {
     }
 
     public void playGame(Board playerBoard, Board rivalBoard) {
-        LOGGER.debug("Play Game!");
+        LOGGER.info("Play Game!");
         this.playerBoard = playerBoard;
         this.rivalBoard = rivalBoard;
         client.sendMessage(Protocol.buildMessage().withCommand(Command.READY));
@@ -95,6 +97,11 @@ public class Business {
 
     public Board getRivalBoard() {
         return rivalBoard;
+    }
+
+    public void gameReady() {
+        playerTurn = true;
+        notifyObservers();
     }
 
     public void doShot(Point point) {
@@ -112,8 +119,10 @@ public class Business {
             playerWin = true;
         } else if (shotResult == Result.SUCCESS) {
             LOGGER.info("You impact a ship!");
+            playerTurn = true;
         } else {
             LOGGER.info("You miss!");
+            playerTurn = false;
         }
         notifyObservers();
     }
@@ -127,13 +136,15 @@ public class Business {
             LOGGER.info("All your ships are sunken. You Lose!");
             client.sendMessage(Protocol.buildMessage().withResponse(Response.OKAY).withAttackResponse(AttackResponse.WIN));
             gameFinished = true;
-            rivalWin = true;
+            playerWin = false;
         } else if (impact) {
             LOGGER.info("Your ship was impacted!");
             client.sendMessage(Protocol.buildMessage().withResponse(Response.OKAY).withAttackResponse(AttackResponse.IMPACT));
+            playerTurn = false;
         } else {
             LOGGER.info("Your rival missed!");
             client.sendMessage(Protocol.buildMessage().withResponse(Response.OKAY).withAttackResponse(AttackResponse.NO_IMPACT));
+            playerTurn = true;
         }
         notifyObservers();
     }
@@ -146,8 +157,8 @@ public class Business {
         return playerWin;
     }
 
-    public boolean isRivalWin() {
-        return rivalWin;
+    public boolean isPlayerTurn() {
+        return playerTurn;
     }
 
 }

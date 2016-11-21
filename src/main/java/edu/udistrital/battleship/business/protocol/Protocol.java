@@ -55,8 +55,8 @@ public final class Protocol {
             strCommandResponse = strMessageCommand.substring(0, strMessageCommand.indexOf(Message.PARAM_SEPARATOR));
             strParameters = strMessageCommand.substring(strMessageCommand.indexOf(Message.PARAM_SEPARATOR) + 1, strMessageCommand.length());
         }
-        Optional<Command> optCommand = Command.byCommand(strCommandResponse);
-        Optional<Response> optResponse = Response.byResponse(strCommandResponse);
+        Optional<Command> optCommand = Command.fromCommand(strCommandResponse);
+        Optional<Response> optResponse = Response.fromResponse(strCommandResponse);
         if (!optCommand.isPresent() && !optResponse.isPresent()) {
             throw new InvalidMessageException("The current message " + strMessage + " isn't a valid message. Command validation fail.");
         } else if (optCommand.isPresent()) {
@@ -131,7 +131,7 @@ public final class Protocol {
             if (isNull(strParameters)) {
                 throw new InvalidMessageException("The current message " + strMessage + " isn't a valid message. Attack response validation fail.");
             } else {
-                Optional<AttackResponse> optAttackResponse = AttackResponse.byAttackResponse(strParameters);
+                Optional<AttackResponse> optAttackResponse = AttackResponse.fromAttackResponse(strParameters);
                 if (!optAttackResponse.isPresent()) {
                     throw new InvalidMessageException("The current message " + strMessage + " isn't a valid message. Attack response validation fail.");
                 } else {

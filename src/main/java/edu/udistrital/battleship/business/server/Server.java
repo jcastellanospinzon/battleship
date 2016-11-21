@@ -1,5 +1,6 @@
 package edu.udistrital.battleship.business.server;
 
+import edu.udistrital.battleship.business.Business;
 import edu.udistrital.battleship.business.protocol.AttackResponse;
 import edu.udistrital.battleship.business.protocol.Message;
 import edu.udistrital.battleship.business.protocol.Protocol;
@@ -13,9 +14,12 @@ import org.apache.logging.log4j.Logger;
 
 import static edu.udistrital.battleship.business.protocol.Protocol.buildMessage;
 
-public class Server implements Runnable {
+public class Server
+    implements Runnable {
 
     private static final Logger LOGGER = LogManager.getLogger(Server.class);
+
+    private final Business business;
 
     private boolean running;
 
@@ -33,7 +37,8 @@ public class Server implements Runnable {
 
     private ServerClient playerTurn;
 
-    public Server() {
+    public Server(Business business) {
+        this.business = business;
         running = false;
         homePlayerReady = false;
         guestPlayerReady = false;
@@ -60,15 +65,15 @@ public class Server implements Runnable {
     public void run() {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             LOGGER.info("Server Socket has Started succesfully");
-            homePlayer = playerConnection(serverSocket);
-            guestPlayer = playerConnection(serverSocket);
+            homePlayer = socketConnection(serverSocket);
+            guestPlayer = socketConnection(serverSocket);
         } catch (IOException e) {
             LOGGER.error("Oops! There is an unexpected error", e);
             throw new Error("Server Connection Error", e);
         }
     }
 
-    private ServerClient playerConnection(ServerSocket serverSocket) {
+    private ServerClient socketConnection(ServerSocket serverSocket) {
         LOGGER.info("Waiting for player connection...");
         try {
             Socket clientSocket = serverSocket.accept();
@@ -96,6 +101,7 @@ public class Server implements Runnable {
         if (homePlayerReady && guestPlayerReady) {
             LOGGER.debug("Both players are ready!");
             playerTurn = homePlayer;
+            business.gameReady();
         }
         return buildMessage()
                    .withResponse(Response.OKAY);
@@ -111,10 +117,6 @@ public class Server implements Runnable {
         }
     }
 
-    private ServerClient getRivalFor(ServerClient serverClient) {
-        return Objects.equals(serverClient, homePlayer) ? guestPlayer : homePlayer;
-    }
-
     public void attackResponse(ServerClient serverClient, Message message) {
         if (homePlayerReady && guestPlayerReady && waitingAttackResponse && !Objects.equals(serverClient, playerTurn)) {
             getRivalFor(serverClient).sendMessage(message);
@@ -126,6 +128,10 @@ public class Server implements Runnable {
             serverClient.sendMessage(Protocol.buildMessage()
                                          .withResponse(Response.NOT_OKAY));
         }
+    }
+
+    private ServerClient getRivalFor(ServerClient serverClient) {
+        return Objects.equals(serverClient, homePlayer) ? guestPlayer : homePlayer;
     }
 
 }

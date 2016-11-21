@@ -1,6 +1,7 @@
 package edu.udistrital.battleship.business.protocol;
 
-public class InvalidMessageException extends Exception {
+public class InvalidMessageException
+    extends Exception {
 
     public InvalidMessageException() {
     }

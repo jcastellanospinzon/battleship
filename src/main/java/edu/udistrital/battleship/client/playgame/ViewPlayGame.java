@@ -3,6 +3,7 @@ package edu.udistrital.battleship.client.playgame;
 import edu.udistrital.battleship.business.game.Board;
 import edu.udistrital.battleship.client.mvc.View;
 import edu.udistrital.battleship.client.swing.JCanvasBattleshipBoard;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -10,7 +11,8 @@ import java.awt.Insets;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class ViewPlayGame extends View<ControllerPlayGame> {
+public class ViewPlayGame
+    extends View<ControllerPlayGame> {
 
     private JCanvasBattleshipBoard canvasPlayerBoard;
 
@@ -19,6 +21,7 @@ public class ViewPlayGame extends View<ControllerPlayGame> {
     private JLabel lblResult;
 
     public ViewPlayGame() {
+        super();
     }
 
     @Override
@@ -41,10 +44,6 @@ public class ViewPlayGame extends View<ControllerPlayGame> {
         rootPanel.add(lblResult, new GridBagConstraints(0, 2, 2, 1, 1.0D, 1.0D, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 20, 20, 20), 0, 0));
     }
 
-    public JCanvasBattleshipBoard getCanvasPlayerBoard() {
-        return canvasPlayerBoard;
-    }
-
     public JCanvasBattleshipBoard getCanvasRivalBoard() {
         return canvasRivalBoard;
     }
@@ -57,9 +56,11 @@ public class ViewPlayGame extends View<ControllerPlayGame> {
         canvasRivalBoard.setBoard(board);
     }
 
-    public void drawResult(String result) {
+    public void drawResult(String result, boolean success) {
+        Color color = success ? Color.GREEN : Color.RED;
         lblResult.setHorizontalAlignment(JLabel.CENTER);
-        lblResult.setFont(lblResult.getFont().deriveFont(100F).deriveFont(Font.BOLD).deriveFont(Font.ITALIC));
+        lblResult.setFont(lblResult.getFont().deriveFont(80F).deriveFont(Font.BOLD).deriveFont(Font.ITALIC));
+        lblResult.setForeground(color);
         lblResult.setText(result);
     }
 

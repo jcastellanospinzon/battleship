@@ -33,8 +33,7 @@ public class Point {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Point point = (Point) o;
-        return row == point.row &&
-                   column == point.column;
+        return (row == point.row) && (column == point.column);
     }
 
     @Override
@@ -71,13 +70,13 @@ public class Point {
         public int getArrayPosition() {
             return arrayPosition;
         }
-        
+
         public static Optional<Row> fromCode(String code) {
             return Arrays.stream(Row.values())
-                .filter(row -> Objects.equals(row.code, code))
-                .findFirst();
+                       .filter(row -> Objects.equals(row.code, code))
+                       .findFirst();
         }
-        
+
         public static Optional<Row> fromArrayPosition(int arrayPosition) {
             return Arrays.stream(Row.values())
                        .filter(row -> row.arrayPosition == arrayPosition)
@@ -127,7 +126,7 @@ public class Point {
                        .filter(column -> column.getArrayPosition() == arrayPosition)
                        .findFirst();
         }
-        
+
     }
 
 }

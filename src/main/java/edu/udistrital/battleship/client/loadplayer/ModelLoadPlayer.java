@@ -10,13 +10,15 @@ import org.apache.logging.log4j.Logger;
 
 import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 
-public class ModelLoadPlayer extends Model<ViewLoadPlayer> {
+public class ModelLoadPlayer
+    extends Model<ViewLoadPlayer> {
 
     private static final Logger LOGGER = LogManager.getLogger(ModelLoadPlayer.class);
 
     private Board board;
 
     public ModelLoadPlayer() {
+        super();
         board = new Board();
     }
 
@@ -31,11 +33,12 @@ public class ModelLoadPlayer extends Model<ViewLoadPlayer> {
             board.addShip(ship);
             view.drawBoard(board);
         } catch (ShipDoesNotFitException e) {
-            LOGGER.error("Oops! There is an unexpected error", e);
+            LOGGER.warn("Oops! The ship doesn't fit in that position");
         }
     }
 
     public void playGame() {
+        LOGGER.debug("Play Game");
         business.playGame(board, new Board());
         view.renderViewPlayGame();
         view.renderMessage("Destroy your enemy!", "Info", INFORMATION_MESSAGE);

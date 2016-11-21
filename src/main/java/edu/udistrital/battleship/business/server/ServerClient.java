@@ -14,7 +14,8 @@ import org.apache.logging.log4j.Logger;
 
 import static java.util.Objects.nonNull;
 
-public class ServerClient implements Runnable {
+public class ServerClient
+    implements Runnable {
 
     private static final Logger LOGGER = LogManager.getLogger(ServerClient.class);
 
@@ -47,7 +48,6 @@ public class ServerClient implements Runnable {
 
     public void stopServerClient() {
         running = false;
-
     }
 
     @Override

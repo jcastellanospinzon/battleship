@@ -5,7 +5,7 @@ import edu.udistrital.battleship.business.Business;
 /**
  * @author Julián Yezid Castellanos Pinzón <i>&lt;jcastellanospinzon@gmail.com&gt;</i>
  */
-public abstract class Model <V extends View> {
+public abstract class Model<V extends View> {
 
     protected Business business;
 

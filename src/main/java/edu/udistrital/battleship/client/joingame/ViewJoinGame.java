@@ -2,7 +2,6 @@ package edu.udistrital.battleship.client.joingame;
 
 import edu.udistrital.battleship.client.BattleshipFrame;
 import edu.udistrital.battleship.client.mvc.View;
-import edu.udistrital.battleship.client.newgame.ViewNewGame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -13,14 +12,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.NumberFormatter;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-public class ViewJoinGame extends View<ControllerJoinGame> {
+public class ViewJoinGame
+    extends View<ControllerJoinGame> {
 
-    public static final Logger LOGGER = LogManager.getLogger(ViewNewGame.class);
-
-    public static final String DEFAULT_GUEST_PLAYER_NAME = "Guest";
+    private static final String DEFAULT_GUEST_PLAYER_NAME = "Guest";
 
     private JButton btnJoin;
 
@@ -29,6 +25,10 @@ public class ViewJoinGame extends View<ControllerJoinGame> {
     private JTextField txtHostname;
 
     private JFormattedTextField txtPort;
+
+    public ViewJoinGame() {
+        super();
+    }
 
     @Override
     public void initRootPanel() {

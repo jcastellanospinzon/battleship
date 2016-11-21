@@ -12,6 +12,12 @@ public class Board {
 
     private static final Logger LOGGER = LogManager.getLogger(Board.class);
 
+    private static final int BOARD_SIZE = 10;
+
+    private static final int SHIPS_COUNT = 10;
+
+    private static final int LIFE_COUNT = 20;
+
     private List<Ship> ships;
 
     private List<Shot> shots;
@@ -22,9 +28,9 @@ public class Board {
 
     public Board() {
         ships = new ArrayList<>();
-        shipsCells = new Ship[10][10];
+        shipsCells = new Ship[BOARD_SIZE][BOARD_SIZE];
         shots = new ArrayList<>();
-        shotsCells = new Shot[10][10];
+        shotsCells = new Shot[BOARD_SIZE][BOARD_SIZE];
     }
 
     public List<Ship> getShips() {
@@ -75,12 +81,12 @@ public class Board {
     }
 
     public boolean allShipsAllocated() {
-        return ships.size() == 10;
+        return ships.size() == SHIPS_COUNT;
     }
 
     public boolean allShipsSunken() {
         long shotCount = shots.stream().filter(shot -> shot.getResult() == Result.SUCCESS).count();
-        return shotCount == 20;
+        return shotCount == LIFE_COUNT;
     }
 
 }

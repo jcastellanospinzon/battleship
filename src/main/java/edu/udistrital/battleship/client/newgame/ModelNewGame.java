@@ -6,11 +6,17 @@ import org.apache.logging.log4j.Logger;
 
 import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 
-public class ModelNewGame extends Model<ViewNewGame> {
+public class ModelNewGame
+    extends Model<ViewNewGame> {
 
     public static final Logger LOGGER = LogManager.getLogger(ModelNewGame.class);
 
+    public ModelNewGame() {
+        super();
+    }
+
     public void newGame(String playerName, int port) {
+        LOGGER.debug("Creating game with player name: {} in port: {}", playerName, port);
         business.startServer(port);
         business.startClient(playerName, "localhost", port);
         view.renderViewLoadPlayer();

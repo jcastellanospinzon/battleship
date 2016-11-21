@@ -15,7 +15,8 @@ import org.apache.logging.log4j.Logger;
 
 import static java.util.Objects.nonNull;
 
-public class Client implements Runnable {
+public class Client
+    implements Runnable {
 
     private static final Logger LOGGER = LogManager.getLogger(Client.class);
 

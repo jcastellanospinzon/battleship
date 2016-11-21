@@ -4,7 +4,13 @@ import edu.udistrital.battleship.client.mvc.Controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ControllerStart extends Controller<ModelStart, ViewStart> implements ActionListener {
+public class ControllerStart
+    extends Controller<ModelStart, ViewStart>
+    implements ActionListener {
+
+    public ControllerStart() {
+        super();
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -22,4 +28,5 @@ public class ControllerStart extends Controller<ModelStart, ViewStart> implement
     public void joinGame() {
         model.joinGame();
     }
+
 }

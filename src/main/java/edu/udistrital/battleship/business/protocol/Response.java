@@ -20,7 +20,7 @@ public enum Response {
         return response;
     }
 
-    public static Optional<Response> byResponse(String response) {
+    public static Optional<Response> fromResponse(String response) {
         return Arrays.stream(Response.values())
                    .filter(r -> Objects.equals(r.response, response))
                    .findFirst();

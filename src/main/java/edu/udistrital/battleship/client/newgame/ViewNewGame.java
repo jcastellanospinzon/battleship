@@ -12,20 +12,21 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.NumberFormatter;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-public class ViewNewGame extends View<ControllerNewGame> {
+public class ViewNewGame
+    extends View<ControllerNewGame> {
 
-    public static final Logger LOGGER = LogManager.getLogger(ViewNewGame.class);
-
-    public static final String DEFAULT_HOME_PLAYER_NAME = "Home";
+    private static final String DEFAULT_HOME_PLAYER_NAME = "Home";
 
     private JButton btnNew;
 
     private JTextField txtPlayerName;
 
     private JFormattedTextField txtPort;
+
+    public ViewNewGame() {
+        super();
+    }
 
     @Override
     public void initRootPanel() {

@@ -7,7 +7,13 @@ import java.awt.event.ActionListener;
 import static java.util.Objects.nonNull;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 
-public class ControllerNewGame extends Controller<ModelNewGame, ViewNewGame> implements ActionListener {
+public class ControllerNewGame
+    extends Controller<ModelNewGame, ViewNewGame>
+    implements ActionListener {
+
+    public ControllerNewGame() {
+        super();
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {

@@ -58,7 +58,7 @@ public class Ship {
         int newColumnArrayPosition = point.getColumn().getArrayPosition() + 1;
         Row currentPointRow = point.getRow();
         Column currentPointColumn = Column.fromArrayPosition(newColumnArrayPosition)
-                                        .orElseThrow(() -> new ShipDoesNotFitException("Ship cannot be localized at column " + newColumnArrayPosition));
+                                        .orElseThrow(() -> new ShipDoesNotFitException("Ship cannot be located at column " + newColumnArrayPosition));
         return new Point(currentPointRow, currentPointColumn);
     }
 
@@ -67,7 +67,7 @@ public class Ship {
         int newRowArrayPosition = point.getRow().getArrayPosition() + 1;
         Column currentPointColumn = point.getColumn();
         Row currentPointRow = Row.fromArrayPosition(newRowArrayPosition)
-                                  .orElseThrow(() -> new ShipDoesNotFitException("Ship cannot be localized at row " + newRowArrayPosition));
+                                  .orElseThrow(() -> new ShipDoesNotFitException("Ship cannot be located at row " + newRowArrayPosition));
         return new Point(currentPointRow, currentPointColumn);
     }
 
